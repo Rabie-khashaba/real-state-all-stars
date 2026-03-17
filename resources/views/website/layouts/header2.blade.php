@@ -1,3 +1,34 @@
+<style>
+    @media (max-width: 991.98px) {
+        #mainNavbar {
+            --mobile-nav-offset: 92px;
+        }
+
+        #mainNavbar .mobile-nav-collapse {
+            max-height: calc(100dvh - var(--mobile-nav-offset));
+            overflow-y: auto;
+            overscroll-behavior: contain;
+            -webkit-overflow-scrolling: touch;
+            padding: 0.75rem 0 1rem;
+            margin-top: 0.75rem;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 18px 50px rgba(15, 23, 42, 0.12);
+        }
+    }
+
+    @media (max-width: 991.98px) and (orientation: landscape) {
+        #mainNavbar {
+            --mobile-nav-offset: 76px;
+        }
+
+        #mainNavbar .mobile-nav-collapse {
+            max-height: calc(100dvh - var(--mobile-nav-offset));
+            padding-bottom: 0.75rem;
+        }
+    }
+</style>
+
 <nav id="mainNavbar"
      class="navbar navbar-expand-lg navbar-light bg-white position-fixed top-0 w-100 shadow-sm"
      style="z-index: 1000; padding-top: 15px; padding-bottom: 15px;">
@@ -62,7 +93,7 @@
         </div>
 
         <!-- ✅ Links -->
-        <div class="collapse navbar-collapse" id="navbarNav">
+        <div class="collapse navbar-collapse mobile-nav-collapse" id="navbarNav">
             <ul class="navbar-nav mx-auto text-center" id="navbarLinks">
                 <li class="nav-item"><a class="nav-link text-dark" href="{{ url('/about') }}">{{ __('home.who_we_are') }}</a></li>
                 <li class="nav-item"><a class="nav-link text-dark" href="{{ url('/judge') }}">{{ __('home.judges') }}</a></li>
@@ -410,6 +441,5 @@
 
 // });
 </script>
-
 
 
