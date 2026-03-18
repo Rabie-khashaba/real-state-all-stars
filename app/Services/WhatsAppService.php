@@ -14,7 +14,7 @@ class WhatsAppService
     public function send($phone, $message, $interviewDate = null, $googleMapUrl = null)
     {
         $service = config('services.whatsapp.service', 'simulation');
-        
+
         // // Create log entry
         // $log = WhatsAppLog::create([
         //     'phone' => $phone,
@@ -29,15 +29,15 @@ class WhatsAppService
         //         'original_message' => $message
         //     ]
         // ]);
-        
+
         try {
             // Format the message
             $formattedMessage = $this->formatMessage($message, $interviewDate, $googleMapUrl);
-            
+
             $result = false;
             $response = null;
             $error = null;
-            
+
             switch ($service) {
                 case 'twilio':
                     $result = $this->sendViaTwilio($phone, $formattedMessage);
@@ -55,19 +55,19 @@ class WhatsAppService
                     $result = $this->sendViaSimulation($phone, $formattedMessage);
                     break;
             }
-            
+
             // Log to file for backup
             $this->logMessageStatus($phone, $formattedMessage, $result ? 'sent' : 'failed', $service, $response, $error);
-            
+
             return $result;
-            
+
         } catch (\Exception $e) {
             $error = $e->getMessage();
            // $log->markAsFailed($error);
-            
+
             // Log to file for backup
             $this->logMessageStatus($phone, $message, 'failed', $service, null, $error);
-            
+
             Log::error('WhatsApp service error: ' . $e->getMessage(), [
                 'phone' => $phone,
                 'error' => $e->getMessage()
@@ -83,20 +83,20 @@ class WhatsAppService
     {
         $message = "مرحباً،\n\n";
         $message .= $messageText . "\n\n";
-        
+
         if ($interviewDate) {
             $formattedDate = \Carbon\Carbon::parse($interviewDate)->format('d/m/Y H:i');
             $message .= "تاريخ المقابلة: " . $formattedDate . "\n\n";
         }
-        
+
         // Add Google Maps URL if provided
         if ($googleMapUrl) {
             $message .= "📍 موقع المقابلة على الخريطة:\n";
             $message .= $googleMapUrl . "\n\n";
         }
-        
+
         $message .= "شكراً لكم";
-        
+
         return $message;
     }
 
@@ -109,14 +109,14 @@ class WhatsAppService
             $accountSid = config('services.twilio.sid');
             $authToken = config('services.twilio.token');
             $fromNumber = config('services.twilio.whatsapp_from');
-            
+
             if (!$accountSid || !$authToken || !$fromNumber) {
                 Log::error('Twilio configuration missing');
                 return false;
             }
-            
+
             $client = new \Twilio\Rest\Client($accountSid, $authToken);
-            
+
             $result = $client->messages->create(
                 "whatsapp:+{$phone}",
                 [
@@ -124,12 +124,12 @@ class WhatsAppService
                     'body' => $message
                 ]
             );
-            
+
             Log::info('Twilio WhatsApp message sent successfully', [
                 'message_sid' => $result->sid,
                 'phone' => $phone
             ]);
-            
+
             return true;
         } catch (\Exception $e) {
             Log::error('Twilio WhatsApp error: ' . $e->getMessage());
@@ -145,14 +145,14 @@ class WhatsAppService
         try {
             $accessToken = config('services.whatsapp.access_token');
             $phoneNumberId = config('services.whatsapp.phone_number_id');
-            
+
             if (!$accessToken || !$phoneNumberId) {
                 Log::error('WhatsApp Business API configuration missing');
                 return false;
             }
-            
+
             $url = "https://graph.facebook.com/v17.0/{$phoneNumberId}/messages";
-            
+
             $data = [
                 'messaging_product' => 'whatsapp',
                 'to' => $phone,
@@ -161,12 +161,12 @@ class WhatsAppService
                     'body' => $message
                 ]
             ];
-            
+
             $response = Http::withHeaders([
                 'Authorization' => "Bearer {$accessToken}",
                 'Content-Type' => 'application/json'
             ])->post($url, $data);
-            
+
             if ($response->successful()) {
                 Log::info('WhatsApp Business API message sent successfully', [
                     'phone' => $phone,
@@ -195,23 +195,23 @@ class WhatsAppService
             $instanceId = config('services.whatsapp.wapilot_instance_id');
             $apiToken = config('services.whatsapp.wapilot_api_token');
             $baseUrl = config('services.whatsapp.wapilot_base_url', 'https://api.wapilot.com');
-            
+
             if (!$instanceId || !$apiToken) {
                 Log::error('WAPilot configuration missing');
                 return false;
             }
-            
+
             // Format phone number with +2 prefix
             $formattedPhone = $this->formatPhoneNumber($phone);
-            
+
             // Use the correct WAPilot API endpoint format
             $url = "{$baseUrl}/v1/{$instanceId}/send-message";
-            
+
             $headers = [
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json'
             ];
-            
+
             // Try different phone number formats for chat_id
             $phoneFormats = [
                 $formattedPhone,                    // +201234567890
@@ -222,23 +222,23 @@ class WhatsAppService
                 $phone,                             // Original format
                 '2' . $phone                        // 2 + original
             ];
-            
+
             foreach ($phoneFormats as $chatId) {
                 $data = [
                     'token' => $apiToken,
                     'chat_id' => $chatId,
                     'text' => $message
                 ];
-                
+
                 Log::info('Trying WAPilot API', [
                     'url' => $url,
                     'chat_id' => $chatId,
                     'phone' => $formattedPhone,
                     'instance_id' => $instanceId
                 ]);
-                
+
                 $response = Http::withHeaders($headers)->post($url, $data);
-                
+
                 if ($response->successful()) {
                     $responseData = $response->json();
                     Log::info('WAPilot WhatsApp message sent successfully', [
@@ -257,7 +257,7 @@ class WhatsAppService
                     ]);
                 }
             }
-            
+
             // If all attempts failed
             Log::error('WAPilot WhatsApp API error - all phone formats failed', [
                 'phone' => $formattedPhone,
@@ -265,9 +265,9 @@ class WhatsAppService
                 'last_response' => $response->json(),
                 'last_status_code' => $response->status()
             ]);
-            
+
             return false;
-            
+
         } catch (\Exception $e) {
             Log::error('WAPilot WhatsApp error: ' . $e->getMessage());
             return false;
@@ -281,16 +281,16 @@ class WhatsAppService
     {
         // Remove any non-digit characters except +
         $phone = preg_replace('/[^0-9+]/', '', $phone);
-        
+
         // Remove + if present
         $phone = ltrim($phone, '+');
-        
+
         // If it doesn't start with country code, add Egypt country code (+2)
         if (!preg_match('/^2\d{1,14}$/', $phone)) {
             // Add Egypt country code (+2)
             $phone = '2' . $phone;
         }
-        
+
         return $phone;
     }
 
@@ -302,12 +302,12 @@ class WhatsAppService
         try {
             $apiUrl = config('services.whatsapp.custom_api_url');
             $apiKey = config('services.whatsapp.custom_api_key');
-            
+
             if (!$apiUrl || !$apiKey) {
                 Log::error('Custom WhatsApp API configuration missing');
                 return false;
             }
-            
+
             $response = Http::withHeaders([
                 'Authorization' => "Bearer {$apiKey}",
                 'Content-Type' => 'application/json'
@@ -315,7 +315,7 @@ class WhatsAppService
                 'phone' => $phone,
                 'message' => $message
             ]);
-            
+
             if ($response->successful()) {
                 Log::info('Custom WhatsApp API message sent successfully', [
                     'phone' => $phone,
@@ -345,10 +345,10 @@ class WhatsAppService
             'status' => 'simulated_success',
             'timestamp' => now()
         ]);
-        
+
         // Simulate API delay
         sleep(1);
-        
+
         return true;
     }
 
@@ -367,12 +367,12 @@ class WhatsAppService
     public function sendTestToNumber($phone = '+201100667988')
     {
         $testMessage = "مرحباً،\n\nهذا اختبار لنظام الرسائل في نظام إدارة الموارد البشرية.\n\nالوقت: " . now()->format('Y-m-d H:i:s') . "\n\nشكراً لكم";
-        
+
         Log::info('Sending test WhatsApp message', [
             'phone' => $phone,
             'message' => $testMessage
         ]);
-        
+
         return $this->send($phone, $testMessage);
     }
 
@@ -383,15 +383,15 @@ class WhatsAppService
     {
         // Format phone number (remove + and any spaces)
         $formattedPhone = preg_replace('/[^0-9]/', '', $phone);
-        
+
         // Create WhatsApp link
         $baseUrl = "https://wa.me/{$formattedPhone}";
-        
+
         if (!empty($message)) {
             $encodedMessage = urlencode($message);
             $baseUrl .= "?text={$encodedMessage}";
         }
-        
+
         return $baseUrl;
     }
 
@@ -436,7 +436,7 @@ class WhatsAppService
     {
         $logFile = storage_path('logs/whatsapp-messages.log');
         $logEntry = json_encode($logData, JSON_UNESCAPED_UNICODE) . "\n";
-        
+
         file_put_contents($logFile, $logEntry, FILE_APPEND | LOCK_EX);
     }
 
@@ -446,7 +446,7 @@ class WhatsAppService
     public function getMessageLogs($limit = 100)
     {
         $logFile = storage_path('logs/whatsapp-messages.log');
-        
+
         if (!file_exists($logFile)) {
             return [];
         }
@@ -456,7 +456,7 @@ class WhatsAppService
 
         // Get last N lines
         $lines = array_slice($lines, -$limit);
-        
+
         foreach ($lines as $line) {
             $logData = json_decode($line, true);
             if ($logData) {
@@ -473,7 +473,7 @@ class WhatsAppService
     public function getMessageStats()
     {
         $logs = $this->getMessageLogs(1000); // Get last 1000 messages for stats
-        
+
         $stats = [
             'total' => count($logs),
             'sent' => 0,
@@ -528,17 +528,17 @@ class WhatsAppService
     public function clearOldLogs()
     {
         $logFile = storage_path('logs/whatsapp-messages.log');
-        
+
         if (!file_exists($logFile)) {
             return true;
         }
 
         $lines = file($logFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-        
+
         if (count($lines) > 1000) {
             $keepLines = array_slice($lines, -1000);
             file_put_contents($logFile, implode("\n", $keepLines) . "\n");
-            
+
             Log::info('WhatsApp logs cleared, kept last 1000 entries');
             return true;
         }
@@ -577,14 +577,14 @@ class WhatsAppService
     {
         $logs = $this->getMessageLogs(1000);
         $attempts = 0;
-        
+
         foreach ($logs as $log) {
-            if ($log['phone'] === $phone && 
+            if ($log['phone'] === $phone &&
                 abs(strtotime($log['timestamp']) - strtotime($timestamp)) < 60) { // Within 1 minute
                 $attempts++;
             }
         }
-        
+
         return $attempts;
     }
 
@@ -598,10 +598,10 @@ class WhatsAppService
             $this->logMessageStatus($phone, $message, 'resending', config('services.whatsapp.service', 'simulation'));
             return $this->send($phone, $message);
         }
-        
+
         // Otherwise, find the message by ID from logs
         $logs = $this->getMessageLogs(1000);
-        
+
         foreach ($logs as $log) {
             $logId = md5($log['phone'] . $log['timestamp'] . $log['message']);
             if ($logId === $messageId && in_array($log['status'], ['failed', 'waiting', 'pending'])) {
@@ -609,7 +609,7 @@ class WhatsAppService
                 return $this->send($log['phone'], $log['message']);
             }
         }
-        
+
         return false;
     }
 
@@ -622,9 +622,9 @@ class WhatsAppService
         $sent = WhatsAppLog::sent()->count();
         $failed = WhatsAppLog::failed()->count();
         $pending = WhatsAppLog::pending()->count();
-        
+
         $successRate = $total > 0 ? round(($sent / $total) * 100, 2) : 0;
-        
+
         return [
             'total' => $total,
             'sent' => $sent,

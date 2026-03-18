@@ -19,7 +19,7 @@ class User extends Authenticatable
      */
     
     protected $fillable = [
-        'name', 'phone', 'email', 'password', 'promo_code' , 'type',
+        'name', 'phone', 'email', 'password', 'promo_code' , 'type', 'otp', 'otp_expired_at',
     ];
 
     /**
@@ -30,6 +30,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'otp',
     ];
 
     /**
@@ -40,6 +41,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'otp_expired_at' => 'datetime',
     ];
 
     public function contestant()

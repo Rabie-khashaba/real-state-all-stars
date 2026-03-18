@@ -351,6 +351,7 @@ class ContestantController extends Controller
                 'phone' => $pending['phone'],
                 'email' => $pending['email'],
                 'password' => $pending['password'], // Already hashed in register
+                'type' => 'contestant',
             ]);
 
             // 2. Handle File Moves (from pending to real)
@@ -398,7 +399,7 @@ class ContestantController extends Controller
                 'destinations' => $pending['destinations'],
                 'participation_reason' => $pending['participation_reason'],
                 'standout_reason' => $pending['standout_reason'],
-                'code' => Str::random(6, '0123456789'),
+                'code' => (string) random_int(100000, 999999),
                 'expire_at' => now()->addDays(7),
             ]);
 
