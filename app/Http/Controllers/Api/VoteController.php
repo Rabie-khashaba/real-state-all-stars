@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Models\Contestant;
 use App\Models\UserDailyVote;
 use App\Models\Vote;
@@ -15,60 +16,49 @@ class VoteController extends Controller
 {
     public function __construct()
     {
-        //$this->middleware('auth');
+        $this->middleware('auth:sanctum');
     }
-
 
     public function index()
     {
         // المرحلة 1: اللي عندهم فيديوهات في المرحلة الأولى مع youtube_url not empty
         $stage1Winners = Contestant::whereHas('videos', function ($q) {
             $q->where('stage_number', 1)->whereNotNull('youtube_url')->where('youtube_url', '!=', '');
-        })->with(['videos', 'contestantStageReviews'])->withCount('votes')->paginate(10);
+        })->with(['videos', 'contestantStageReviews'])->withCount('votes')->get();
 
         // المرحلة 2: اللي عندهم فيديوهات في المرحلة الثانية مع youtube_url not empty
         $stage2Winners = Contestant::whereHas('videos', function ($q) {
             $q->where('stage_number', 2)->whereNotNull('youtube_url')->where('youtube_url', '!=', '');
-        })->with(['videos', 'contestantStageReviews'])->withCount('votes')->paginate(10);
+        })->with(['videos', 'contestantStageReviews'])->withCount('votes')->get();
 
         // المرحلة 3: اللي عندهم فيديوهات في المرحلة الثالثة مع youtube_url not empty
         $stage3Winners = Contestant::whereHas('videos', function ($q) {
             $q->where('stage_number', 3)->whereNotNull('youtube_url')->where('youtube_url', '!=', '');
-        })->with(['videos', 'contestantStageReviews'])->withCount('votes')->paginate(10);
+        })->with(['videos', 'contestantStageReviews'])->withCount('votes')->get();
 
         // المرحلة 4: اللي عندهم فيديوهات في المرحلة الرابعة مع youtube_url not empty
         $stage4Winners = Contestant::whereHas('videos', function ($q) {
             $q->where('stage_number', 4)->whereNotNull('youtube_url')->where('youtube_url', '!=', '');
-        })->with(['videos', 'contestantStageReviews'])->withCount('votes')->paginate(10);
+        })->with(['videos', 'contestantStageReviews'])->withCount('votes')->get();
 
         // تحديد آخر مرحلة مفتوحة (آخر مرحلة فيها فيديوهات في قاعدة البيانات)
         $highestOpenStage = ContestantVideo::whereNotNull('stage_number')
             ->where('stage_number', '>', 0)
             ->max('stage_number') ?? 1;
 
-
-
-
-        //return $stage1Winners;
-
-
-        return view('website.vote.index', compact(
-            'stage1Winners',
-            'stage2Winners',
-            'stage3Winners',
-            'stage4Winners',
-            'highestOpenStage'
-        ));
+        return response()->json([
+            'stages' => [
+                'stage1' => $stage1Winners,
+                'stage2' => $stage2Winners,
+                'stage3' => $stage3Winners,
+                'stage4' => $stage4Winners,
+            ],
+            'highestOpenStage' => $highestOpenStage,
+        ]);
     }
-
-
 
     public function vote(Request $request, $contestantId)
     {
-
-
-
-
         $user = Auth::user();
         $contestant = Contestant::findOrFail($contestantId);
 
@@ -111,31 +101,15 @@ class VoteController extends Controller
             ], 403);
         }
 
-
-
-        //return $contestant;
-
-        // if ($user->id === $contestant->user_id) {
-        //     return response()->json([
-        //         'success' => false,
-        //         'message' => 'You cannot vote for yourself.',
-        //     ], 403);
-        // }
-
-        return DB::transaction(function () use ($user, $contestant, $request) {
+        return DB::transaction(function () use ($user, $contestant) {
             $dailyVote = UserDailyVote::getTodayRecord($user);
 
-            /* if (!$dailyVote->canVote()) {
+            if (!$dailyVote->canVote()) {
                 return response()->json([
                     'success' => false,
                     'message' => 'You have no more votes left for today.',
                 ], 403);
-            } */
-
-            if (!$dailyVote->canVote()) {
-                return redirect()->back()->with('error', 'You have no more votes left for today.');
             }
-
 
             Vote::create([
                 'contestant_id' => $contestant->id,
@@ -145,15 +119,11 @@ class VoteController extends Controller
 
             $dailyVote->useVote();
 
-           /*  return response()->json([
+            return response()->json([
                 'success' => true,
                 'message' => 'Vote cast successfully.',
-                'canVote' => $dailyVote->canVote(), // Update frontend button state
-            ]); */
-
-
-        return redirect()->back()->with('success', 'Vote cast successfully.');
-
+                'canVote' => $dailyVote->canVote(),
+            ]);
         });
     }
 
@@ -170,9 +140,52 @@ class VoteController extends Controller
         try {
             // Assume payment is successful (integrate with a payment gateway like Stripe)
             $dailyVote->addVotes($number);
-            return back()->with('success', 'Additional votes purchased.');
+            return response()->json([
+                'success' => true,
+                'message' => 'Additional votes purchased.',
+            ]);
         } catch (\Exception $e) {
-            return back()->with('error', $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ], 500);
         }
+    }
+
+    public function getAllContestants()
+    {
+        $contestants = Contestant::with(['videos', 'contestantStageReviews'])->withCount('votes')->get();
+
+        $formattedContestants = $contestants->map(function ($contestant) {
+            return [
+                'id' => $contestant->id,
+                'user_id' => $contestant->user_id,
+                'nationality_id' => $contestant->nationality_id,
+                'profile_photo_path' => $contestant->profile_photo_path ? asset('storage/app/public/' . $contestant->profile_photo_path) : null,
+                'dob' => $contestant->dob,
+                'gender' => $contestant->gender,
+                'phone' => $contestant->phone,
+                'experience' => $contestant->experience,
+                'employer' => $contestant->employer,
+                'expertise_areas' => $contestant->expertise_areas,
+                'expertise_other' => $contestant->expertise_other,
+                'destinations' => $contestant->destinations,
+                'status' => $contestant->status,
+                'activation_way' => $contestant->activation_way,
+                'code' => $contestant->code,
+                'is_verified' => $contestant->is_verified,
+                'verified_at' => $contestant->verified_at,
+                'expire_at' => $contestant->expire_at,
+                'participation_reason' => $contestant->participation_reason,
+                'standout_reason' => $contestant->standout_reason,
+                'votes_count' => $contestant->votes_count,
+                'videos' => $contestant->videos,
+                'contestant_stage_reviews' => $contestant->contestant_stage_reviews,
+            ];
+        });
+
+        return response()->json([
+            'contestants' => $formattedContestants,
+        ]);
     }
 }

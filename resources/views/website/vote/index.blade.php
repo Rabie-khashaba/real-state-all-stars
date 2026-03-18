@@ -271,22 +271,22 @@
             margin-top: auto; /* يدفعهم لأسفل داخل overlay */
             padding-bottom: 10px; /* مسافة من أسفل الكارد */
         }
-        
+
         .overlay-content .video-icons .icon-label img {
             width: 30px;   /* حجم الأيقونة */
             height: 30px;
             object-fit: contain;
         }
-        
+
         .overlay-content .video-icons .icon-label p {
             margin: 0;
             font-size: 9px;
             color: #fff;
         }
-        
-        
+
+
         /* share*/
-        
+
         .share-popup-overlay {
             position: fixed;
             top: 0;
@@ -299,7 +299,7 @@
             align-items: center;
             z-index: 9999;
         }
-        
+
         .share-popup {
             background: #fff;
             padding: 25px 30px;
@@ -309,19 +309,19 @@
             animation: fadeIn 0.3s ease;
             width: 300px;
         }
-        
+
         .share-popup h5 {
             font-weight: bold;
             margin-bottom: 15px;
         }
-        
+
         .share-buttons {
             display: flex;
             justify-content: center;
             gap: 20px;
             margin-bottom: 15px;
         }
-        
+
         .share-buttons a {
             width: 55px;
             height: 55px;
@@ -334,17 +334,17 @@
             text-decoration: none;
             transition: transform 0.2s ease, opacity 0.2s ease;
         }
-        
+
         .share-buttons a:hover {
             transform: scale(1.1);
             opacity: 0.85;
         }
-        
+
         /* ألوان المنصات */
         .whatsapp { background-color: #25D366; }
         .facebook { background-color: #1877F2; }
         .twitter  { background-color: #1DA1F2; }
-        
+
         .copy-link {
             background-color: #f1f1f1;
             color: #333;
@@ -355,35 +355,35 @@
             cursor: pointer;
             transition: background 0.2s ease;
         }
-        
+
         .copy-link:hover {
             background-color: #e0e0e0;
         }
-        
+
         .copy-success {
             color: #28a745;
             margin-top: 10px;
             font-size: 14px;
             display: none;
         }
-        
+
         @keyframes fadeIn {
             from { opacity: 0; transform: scale(0.9); }
             to { opacity: 1; transform: scale(1); }
         }
-        
-        
-        
+
+
+
         .judge-card {
             background: rgba(0, 0, 0, 0.10); /* ⬅️ شفافية عالية جدًا */
             border-radius: 20px;
             overflow: hidden;
             position: relative;
-            backdrop-filter: blur(2px); 
+            backdrop-filter: blur(2px);
             -webkit-backdrop-filter: blur(2px);
             padding: 0;
         }
-        
+
         .judge-img img {
             width: 100%;
             height: 300px;
@@ -393,7 +393,7 @@
         }
 
         .modal {
-            display: none; 
+            display: none;
             position: fixed;
             z-index: 1000;
             left: 0;
@@ -447,7 +447,7 @@
                 margin: 25% auto;
             }
         }
-        
+
         .vote-btn:disabled {
             background-color: #e0e0e0;
             color: #999;
@@ -455,40 +455,27 @@
             cursor: not-allowed;
             opacity: 0.6;
             height:35px !important;
-            
+
         }
-        
+
         .vote-btn:disabled:hover {
             background-color: #e0e0e0;
         }
-        
+
         html[lang="ar"] .stage-tabs {
     gap: 4 !important;   /* يشيل المسافة الزيادة */
     padding-right: 0;   /* مهم */
     margin-right: 0;
 }
-        
-        
+
+
         @media (max-width: 768px) {
     html[lang="ar"] .stage-tabs .nav-link {
         font-size: 14px; /* صغّر زي ما تحب */
          justify-content: center;   /* توسيط */
-    direction: rtl;  
+    direction: rtl;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     </style>
 @endsection
@@ -510,10 +497,7 @@
 
 
     </section>
-
     {{--section 2--}}
-
-
     <section class="container py-5">
         <!-- Stages Tabs -->
         <div class="mb-4">
@@ -540,13 +524,13 @@
                 </li>
             </ul>
         </div>
-        
+
         @if(session('success'))
-                            <p class="text-success text-center mb-3">{{ session('success') }}</p>
-                        @endif
-                        @if(session('error'))
-                            <p class="text-danger text-center mb-3">{{ session('error') }}</p>
-                        @endif
+            <p class="text-success text-center mb-3">{{ session('success') }}</p>
+        @endif
+        @if(session('error'))
+            <p class="text-danger text-center mb-3">{{ session('error') }}</p>
+        @endif
 
 
 
@@ -556,59 +540,55 @@
                 <!-- Tabs Content -->
                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-5 g-4">
 
-
-
-                   
-                    
                    {{-- @php
                         $stage1Winners = [];
                     @endphp --}}
                     @forelse ($stage1Winners as $stage1Winner)
                         <div class="col">
-                            <div class="contestant-card mx-auto position-relative" 
+                            <div class="contestant-card mx-auto position-relative"
                                  style="cursor: pointer;"
                                  onclick="window.location='{{ route('contestant.show', $stage1Winner->user->id) }}'">
-                    
+
                                 <!-- Image -->
-                                <img src="{{ asset('storage/app/public/' . $stage1Winner->profile_photo_path) }}" 
+                                <img src="{{ asset('storage/app/public/' . $stage1Winner->profile_photo_path) }}"
                                      alt="Contestant Image" class="w-100 h-100 object-cover rounded-full contestant-image">
-                    
+
                                 <!-- Overlay Content -->
                                 <div class="overlay-content position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-between text-white p-1">
-                    
+
                                     <!-- Top Icons -->
                                     <div class="d-flex justify-content-between ">
-                                        <a href="javascript:void(0);" class="share-icon-link" 
+                                        <a href="javascript:void(0);" class="share-icon-link"
                                            onclick="event.stopPropagation(); openShareOptions('{{ route('contestant.show', $stage1Winner->user->id) }}')">
                                             <div style="width: 18px; height: 18px; color: #000000; font-size: 25px;" class="share-icon">
                                                 <i class="bi bi-share-fill"></i>
                                             </div>
                                         </a>
-                    
+
                                         <!--<div class="vote-count">-->
                                         <!--    <i class="fa-solid fa-thumbs-up"></i>-->
                                         <!--    <span class="vote-number">{{ $stage1Winner->votes_count }}</span>-->
                                         <!--</div>-->
-                                        
+
                                         <div class="vote-count d-flex align-items-center gap-2">
                                             <img src="{{ asset('public/images/vote/vote1.svg') }}" alt="Thumbs Up" style="width:24px; height:24px; margin-right:8px;">
                                             <span class="vote-number">{{ $stage1Winner->votes_count }}</span>
                                         </div>
 
                                     </div>
-                    
+
                                     <!-- Center Content -->
                                     <div class="contestant-body text-start mt-4">
                                         <div class="mt-5 pt-5">
                                             <p style="font-family: 'NowB', sans-serif; font-size: 13px;" class="contestant-name">
-                                                {{ $stage1Winner->user->name }} 
+                                                {{ $stage1Winner->user->name }}
                                                 <span class="verified-badge"><img src="{{asset('public/images/vote/verified.png')}}"></span>
                                             </p>
                                             <p style="font-family: 'NowR', sans-serif; font-size: 9px;" class="contestant-role">
                                                 {{ $stage1Winner->employer  }} | {{ $stage1Winner->user_id + 1000 }}
                                             </p>
                                         </div>
-                    
+
                                         <!-- Video Icons -->
                                         <div class="video-icons d-flex justify-content-center gap-5">
                                             @php
@@ -629,16 +609,16 @@
                                             </div>
                                         </div>
                                     </div>
-                    
+
                                     <!-- Buttons -->
                                     <div class="contestant-buttons d-flex flex-row gap-2 justify-content-center">
                                        {{-- <form action="{{ route('vote', $stage1Winner->id) }}" method="POST" class="vote-form d-inline" onclick="event.stopPropagation();">
                                             @csrf
                                             <button type="submit" class="btn btn-white vote-btn custom-vote">{{__('vote.Vote')}}</button>
                                         </form> --}}
-                                        
-                                        
-                                       @php
+
+
+                                        @php
                                         // تحديد آخر مرحلة عند المتسابق رفع فيها فيديو
                                         $contestantHighestStage = $stage1Winner->videos->where('stage_number', '>', 0)->max('stage_number') ?? 1;
                                         // الزر يكون فعال فقط إذا كانت آخر مرحلة عند المتسابق = المرحلة الحالية (1)
@@ -651,7 +631,7 @@
                                         // إذا يوجد review وفاز → الزر disabled
                                         $hasWonInHighestStage = $reviewInHighestStage && $reviewInHighestStage->is_winner == true;
                                         $canVoteInThisStage = $isInHighestStage && $hasVideoWithUrl && !$hasWonInHighestStage;
-                                    @endphp
+                                        @endphp
                                         @if($canVoteInThisStage)
                                             <form action="{{ route('vote', $stage1Winner->id) }}" method="POST" class="vote-form d-inline">
                                                 @csrf
@@ -660,7 +640,7 @@
                                         @else
                                             <button type="button" class="btn btn-white vote-btn custom-vote" disabled style="opacity: 0.5; cursor: not-allowed;">Vote</button>
                                         @endif
-                    
+
                                         <form action="{{ route('interest.toggle', $stage1Winner->id) }}" method="POST" class="interest-form d-inline" onclick="event.stopPropagation();">
                                             @csrf
                                             <button type="submit"
@@ -672,18 +652,18 @@
                                                 {{__('vote.Interested')}}
                                             </button>
                                         </form>
-                    
+
                                         <p class="vote-message mt-2 text-center text-success" style="display:none;"></p>
                                     </div>
-                    
+
                                 </div>
                             </div>
-                       
-                     
+
+
                         </div>
-                        
+
                         @empty
-                        
+
                        <div class="col-6 col-md-4 custom-col-5">
                             <a href="#" class="text-decoration-none judgeCard">
                                 <div class="judge-card">
@@ -693,7 +673,7 @@
                                 </div>
                             </a>
                         </div>
-                        
+
                         <div class="col-6 col-md-4 custom-col-5">
                             <a href="#" class="text-decoration-none judgeCard">
                                 <div class="judge-card">
@@ -703,7 +683,7 @@
                                 </div>
                             </a>
                         </div>
-                        
+
                         <div class="col-6 col-md-4 custom-col-5">
                             <a href="#" class="text-decoration-none judgeCard">
                                 <div class="judge-card">
@@ -722,7 +702,7 @@
                                 </div>
                             </a>
                         </div>
-                        
+
                         <div class="col-6 col-md-4 custom-col-5">
                             <a href="#" class="text-decoration-none judgeCard">
                                 <div class="judge-card">
@@ -732,7 +712,7 @@
                                 </div>
                             </a>
                         </div>
-                        
+
                         <!-- Modal -->
                         <div id="judgeModal" class="modal">
                             <div class="modal-content">
@@ -758,7 +738,7 @@
 
 
                 <!-- Pagination -->
-                
+
                 @if($stage1Winners instanceof \Illuminate\Pagination\AbstractPaginator)
                 <div class="d-flex justify-content-center mt-4">
                     <ul class="pagination custom-pagination gap-2">
@@ -770,14 +750,14 @@
                                 <a class="page-link" href="{{ $stage1Winners->previousPageUrl() }}" rel="prev">&laquo;</a>
                             </li>
                         @endif
-            
+
                         {{-- Page Links --}}
                         @foreach ($stage1Winners->getUrlRange(1, $stage1Winners->lastPage()) as $page => $url)
                             <li class="page-item {{ $stage1Winners->currentPage() == $page ? 'active' : '' }}">
                                 <a class="page-link" href="{{ $url }}">{{ $page }}</a>
                             </li>
                         @endforeach
-            
+
                         {{-- Next Page Link --}}
                         @if ($stage1Winners->hasMorePages())
                             <li class="page-item">
@@ -813,7 +793,7 @@
 
                                 <!-- Top Icons -->
                                 <div class="d-flex justify-content-between ">
-                                    <a href="javascript:void(0);" class="share-icon-link" 
+                                    <a href="javascript:void(0);" class="share-icon-link"
                                            onclick="event.stopPropagation(); openShareOptions('{{ route('contestant.show', $stage2Winner->user->id) }}')">
                                             <div style="width: 18px; height: 18px; color: #000000; font-size: 25px;" class="share-icon">
                                                 <i class="bi bi-share-fill"></i>
@@ -860,7 +840,7 @@
                                         @csrf
                                         <button type="submit" class="btn btn-white vote-btn custom-vote">{{__('vote.Vote')}}</button>
                                     </form> --}}
-                                    
+
                                     @php
                                         // تحديد آخر مرحلة عند المتسابق رفع فيها فيديو
                                         $contestantHighestStage = $stage2Winner->videos->where('stage_number', '>', 0)->max('stage_number') ?? 2;
@@ -950,7 +930,7 @@
                     @foreach ($stage3Winners as $stage3Winner)
                     <!-- Card 1 -->
                     <div class="col">
-                        <div class="contestant-card mx-auto position-relative" 
+                        <div class="contestant-card mx-auto position-relative"
                         style="cursor: pointer;"
                                  onclick="window.location='{{ route('contestant.show', $stage3Winner->user->id) }}'">
                             <!-- Image -->
@@ -961,7 +941,7 @@
 
                                 <!-- Top Icons -->
                                 <div class="d-flex justify-content-between ">
-                                    <a href="javascript:void(0);" class="share-icon-link" 
+                                    <a href="javascript:void(0);" class="share-icon-link"
                                            onclick="event.stopPropagation(); openShareOptions('{{ route('contestant.show', $stage3Winner->user->id) }}')">
                                             <div style="width: 18px; height: 18px; color: #000000; font-size: 25px;" class="share-icon">
                                                 <i class="bi bi-share-fill"></i>
@@ -1008,7 +988,7 @@
                                         @csrf
                                         <button type="submit" class="btn btn-white vote-btn custom-vote">{{__('vote.Vote')}}</button>
                                     </form> --}}
-                                    
+
                                       @php
                                         // تحديد آخر مرحلة عند المتسابق رفع فيها فيديو
                                         $contestantHighestStage = $stage3Winner->videos->where('stage_number', '>', 0)->max('stage_number') ?? 3;
@@ -1051,7 +1031,7 @@
                             </div>
                         </div>
 
-                       
+
 
                     </div>
                     @endforeach
@@ -1111,7 +1091,7 @@
 
                                 <!-- Top Icons -->
                                 <div class="d-flex justify-content-between ">
-                                    <a href="javascript:void(0);" class="share-icon-link" 
+                                    <a href="javascript:void(0);" class="share-icon-link"
                                        onclick="event.stopPropagation(); openShareOptions('{{ route('contestant.show', $stage4Winner->user->id) }}')">
                                         <div style="width: 18px; height: 18px; color: #000000; font-size: 25px;" class="share-icon">
                                             <i class="bi bi-share-fill"></i>
@@ -1158,7 +1138,7 @@
                                         @csrf
                                         <button type="submit" class="btn btn-white vote-btn custom-vote">{{__('vote.Vote')}}</button>
                                     </form> --}}
-                                    
+
                                      @php
                                         // تحديد آخر مرحلة عند المتسابق رفع فيها فيديو
                                         $contestantHighestStage = $stage4Winner->videos->where('stage_number', '>', 0)->max('stage_number') ?? 4;
@@ -1200,7 +1180,7 @@
                             </div>
                         </div>
 
-                      
+
 
                     </div>
                     @endforeach

@@ -74,14 +74,14 @@
                 align-items: center !important;
                 text-align: center !important;
             }
-            
-            
+
+
 
             .hero h1 {
                 font-size: 1.6rem;
                 line-height: 1.8rem;
             }
-            
+
             .hero .textB{
                 font-size : 35px;
             }
@@ -278,8 +278,8 @@
             font-size: 50px;
 
         }
-        
-        
+
+
         .text_vote{
             font-size: 28px;
         }
@@ -374,7 +374,7 @@
                             <h3 class="text-white mb-0 h3_n">45</h3>
                             <p class=" p_text mb-0">{{__('home.Minutes')}}</p>
                         </div> --}}
-                        
+
                         <div>
                             <h3 id="countdown-days" class="text-white mb-0 h3_n">30</h3>
                             <p class="p_text  mb-0">{{__('home.Days')}}</p>
@@ -412,42 +412,42 @@
                             <h3 class="text-white mb-0 h3_n">45</h3>
                             <p class="p_text mb-0">{{__('home.Projects')}}</p>
                         </div> --}}
-                        
-                        
-                        @php
-use Carbon\Carbon;
 
-// تاريخ البداية (غيّره حسب مشروعك)
-$startDate = Carbon::create(2026, 1,20);
 
-// تاريخ اليوم
-$today = Carbon::today();
+                    @php
+                    use Carbon\Carbon;
 
-// عدد الأيام من البداية لليوم (شامل اليوم)
-$daysCount = $startDate->diffInDays($today) + 1;
+                    // تاريخ البداية (غيّره حسب مشروعك)
+                    $startDate = Carbon::create(2026, 1,20);
 
-$totalIncrease = 0;
+                    // تاريخ اليوم
+                    $today = Carbon::today();
 
-// نحسب زيادة كل يوم
-for ($i = 0; $i < $daysCount; $i++) {
+                    // عدد الأيام من البداية لليوم (شامل اليوم)
+                    $daysCount = $startDate->diffInDays($today) + 1;
 
-    // seed ثابت لكل يوم
-    $daySeed = $startDate->copy()->addDays($i)->format('Ymd');
-    mt_srand((int) $daySeed);
+                    $totalIncrease = 0;
 
-    // رقم عشوائي ثابت لليوم (20 - 30)
-    $dailyIncrease = mt_rand(20, 30);
+                    // نحسب زيادة كل يوم
+                    for ($i = 0; $i < $daysCount; $i++) {
 
-    $totalIncrease += $dailyIncrease;
-}
+                        // seed ثابت لكل يوم
+                        $daySeed = $startDate->copy()->addDays($i)->format('Ymd');
+                        mt_srand((int) $daySeed);
 
-// الرقم النهائي
-$finalContestantsNumber =
-    ($contestantsCount ?? 0) + 1000 + $totalIncrease;
-@endphp
+                        // رقم عشوائي ثابت لليوم (20 - 30)
+                        $dailyIncrease = mt_rand(20, 30);
 
-                        
-                        
+                        $totalIncrease += $dailyIncrease;
+                    }
+
+                    // الرقم النهائي
+                    $finalContestantsNumber =
+                        ($contestantsCount ?? 0) + 1000 + $totalIncrease;
+                    @endphp
+
+
+
                         <div>
                             <h3 class="text-white mb-0 h3_n">{{ 1735 }}</h3>
                             <p class="p_text mb-0">{{ __('home.Contestants') }}</p>
@@ -548,20 +548,20 @@ $finalContestantsNumber =
             <div class="row mb-5 mt-3">
                 <div class="col-12">
                     <h2 style="font-family: 'NowM', sans-serif; font-size: 20px; color: #fff;" class="text-uppercase">
-    @php
-        $extraText = app()->getLocale() === 'ar'
-            ? (optional($prize)->extra_text_ar ?? 'جوائز إضافية تقدر بـ')
-            : (optional($prize)->extra_text_en ?? 'And');
-        $extraAmount = optional($prize)->extra_amount ?? '$500k';
-    @endphp
+                        @php
+                            $extraText = app()->getLocale() === 'ar'
+                                ? (optional($prize)->extra_text_ar ?? 'جوائز إضافية تقدر بـ')
+                                : (optional($prize)->extra_text_en ?? 'And');
+                            $extraAmount = optional($prize)->extra_amount ?? '$500k';
+                        @endphp
 
-    {{ $extraText }} <span style="color: #F8DA58">{{ $extraAmount }}</span>
-    @if(app()->getLocale() === 'ar')
-        !
-    @else
-        more
-    @endif
-</h2>
+                        {{ $extraText }} <span style="color: #F8DA58">{{ $extraAmount }}</span>
+                        @if(app()->getLocale() === 'ar')
+                            !
+                        @else
+                            more
+                        @endif
+                    </h2>
 
                 </div>
             </div>
@@ -708,7 +708,7 @@ $finalContestantsNumber =
             setTimeout(initOwlCarousel, 300); // نعيد تهيئة الكاروسيل بعد تغيير الاتجاه
         });
     });
-    
+
 </script>
 
 

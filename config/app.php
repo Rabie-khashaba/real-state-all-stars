@@ -17,6 +17,8 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
+    'image_domain' => env('IMAGE_DOMAIN', env('APP_URL')),
+
 
     /*
     |--------------------------------------------------------------------------

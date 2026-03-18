@@ -10,14 +10,14 @@ class JudgeController extends Controller
     /**
      * Display the specified judge profile.
      */
-     
+
     public function index(){
 
         $judges = JudgeCon::all();
         return view ('website.judge.index2' , compact('judges'));
     }
-    
-    
+
+
     public function show($id)
     {
         $judge = JudgeCon::findOrFail($id);
