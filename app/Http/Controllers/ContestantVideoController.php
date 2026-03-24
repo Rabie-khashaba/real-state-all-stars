@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contestant;
+use App\Models\ContestantStageReview;
 use App\Models\ContestantVideo;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -207,6 +208,22 @@ class ContestantVideoController extends Controller
             return redirect()->route('profile.edit', $user->id)
                 ->with('error', 'You must upload at least one video.');
         }
+
+        ContestantStageReview::updateOrCreate(
+            [
+                'contestant_id' => $contestant->id,
+                'stage_number' => $stageNumber,
+            ],
+            [
+                'status' => 'pending',
+                'rejection_reason' => null,
+                'reviewed_by' => null,
+                'reviewed_at' => null,
+                'is_winner' => false,
+                'winnered_by' => null,
+                'winnered_at' => null,
+            ]
+        );
     
         return redirect()->route('profile.edit', $user->id)
             ->with('success', "Videos uploaded successfully for Stage {$stageNumber}!");

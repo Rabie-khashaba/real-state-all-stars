@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\ContestantAuthController;
+use App\Http\Controllers\Api\ContestantVideoController;
 use App\Http\Controllers\Api\AboutController;
 use App\Http\Controllers\Api\HomeController;
 use App\Http\Controllers\Api\JudgeController;
@@ -9,6 +10,7 @@ use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\UnitController;
 use App\Http\Controllers\Api\UnitTypeController;
 use App\Http\Controllers\Api\VoteController;
+use App\Http\Controllers\Api\VoterAuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -94,6 +96,15 @@ Route::prefix('contestant')->group(function () {
     Route::middleware('auth:sanctum')->group(function () {
         Route::get('/profile', [ContestantAuthController::class, 'profile']);
         Route::post('/profile/{id}', [ContestantAuthController::class, 'updateProfile']);
+        Route::post('/videos/upload', [ContestantVideoController::class, 'upload']);
         Route::post('/logout', [ContestantAuthController::class, 'logout']);
     });
+});
+
+
+Route::prefix('voter')->group(function () {
+    Route::post('/register', [VoterAuthController::class, 'register']);
+    Route::post('/verify-voter-otp', [VoterAuthController::class, 'verifyVoterOtp']);
+    Route::post('/resend-otp', [VoterAuthController::class, 'resendOtp']);
+    Route::post('/login', [VoterAuthController::class, 'login']);
 });
