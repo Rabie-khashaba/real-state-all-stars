@@ -33,7 +33,7 @@ class UnitController extends Controller
                     $unit->photo_1 ? config('app.image_domain') . '/storage/' . $unit->photo_1 : null,
                     $unit->photo_2 ? config('app.image_domain') . '/storage/' . $unit->photo_2 : null,
                     $unit->photo_3 ? config('app.image_domain') . '/storage/' . $unit->photo_3 : null,
-            ])),
+                ])),
                 'main_photo' => $unit->main_photo ? config('app.image_domain') . '/storage/' . $unit->main_photo : null,
                 'is_visible' => $unit->is_visible ?? null,
                 'developer' => $unit->developer ? [
