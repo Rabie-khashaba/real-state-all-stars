@@ -4,13 +4,18 @@ use App\Http\Controllers\Api\ContestantAuthController;
 use App\Http\Controllers\Api\ContestantVideoController;
 use App\Http\Controllers\Api\AboutController;
 use App\Http\Controllers\Api\HomeController;
+use App\Http\Controllers\Api\InterestController;
 use App\Http\Controllers\Api\JudgeController;
 use App\Http\Controllers\Api\DeveloperController;
+use App\Http\Controllers\Api\DeveloperFormController;
 use App\Http\Controllers\Api\ProjectController;
+use App\Http\Controllers\Api\SponsorFormController;
+use App\Http\Controllers\Api\PartnerController;
 use App\Http\Controllers\Api\UnitController;
 use App\Http\Controllers\Api\UnitTypeController;
 use App\Http\Controllers\Api\VoteController;
 use App\Http\Controllers\Api\VoterAuthController;
+use App\Http\Controllers\Api\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -29,6 +34,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+
+Route::post('/login', [AuthController::class, 'login']);
+
 Route::get('/about', [AboutController::class, 'index']);
 
 Route::prefix('judges')->group(function () {
@@ -45,6 +53,18 @@ Route::prefix('developers')->group(function () {
     Route::get('/{id}/projects/{projectId}', [DeveloperController::class, 'project']);
 });
 
+Route::prefix('developer-forms')->group(function () {
+    Route::get('/', [DeveloperFormController::class, 'index']);
+    Route::get('/{id}', [DeveloperFormController::class, 'show']);
+    Route::post('/', [DeveloperFormController::class, 'store']);
+});
+
+Route::prefix('sponsors')->group(function () {
+    Route::get('/', [SponsorFormController::class, 'index']);
+    Route::get('/{id}', [SponsorFormController::class, 'show']);
+    Route::post('/', [SponsorFormController::class, 'store']);
+});
+
 Route::prefix('projects')->group(function () {
     Route::get('/', [ProjectController::class, 'index']);
     Route::get('/{id}', [ProjectController::class, 'show']);
@@ -54,6 +74,12 @@ Route::prefix('projects')->group(function () {
 
 Route::prefix('units')->group(function () {
     Route::get('/{id}', [UnitController::class, 'showUnit']);
+});
+
+Route::prefix('partners')->group(function () {
+    Route::get('/', [PartnerController::class, 'index']);
+    Route::get('/{id}', [PartnerController::class, 'show']);
+    Route::post('/', [PartnerController::class, 'store']);
 });
 
 Route::prefix('unit-types')->group(function () {
@@ -100,6 +126,10 @@ Route::prefix('contestant')->group(function () {
         Route::post('/videos/upload', [ContestantVideoController::class, 'upload']);
         Route::post('/logout', [ContestantAuthController::class, 'logout']);
     });
+});
+
+Route::prefix('interests')->middleware('auth:sanctum')->group(function () {
+    Route::post('/toggle/{contestantId}', [InterestController::class, 'toggle']);
 });
 
 
