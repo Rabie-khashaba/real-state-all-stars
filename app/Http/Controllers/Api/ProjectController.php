@@ -30,9 +30,11 @@ class ProjectController extends Controller
                 'brochure' => $project->brochure ? config('app.image_domain') . '/storage/' . $project->brochure : null,
                 'map_url' => $project->map_url ?? null,
                 'main_photo' => $project->main_photo ? config('app.image_domain') . '/storage/' . $project->main_photo : null,
-                'photos' => $project->photos ? array_map(function($photo) {
-                    return config('app.image_domain') . '/storage/' . $photo;
-                }, $project->photos) : [],
+                'photos' => array_values(array_filter([
+                    $project->photo_1 ? config('app.image_domain') . '/storage/' . $project->photo_1 : null,
+                    $project->photo_2 ? config('app.image_domain') . '/storage/' . $project->photo_2 : null,
+                    $project->photo_3 ? config('app.image_domain') . '/storage/' . $project->photo_3 : null,
+                ])),
                 'competition_status' => $project->competition_status ?? null,
                 'is_visible' => $project->is_visible ?? null,
                 'developer' => $project->developer ? [
@@ -83,9 +85,11 @@ class ProjectController extends Controller
             'brochure' => $project->brochure ? config('app.image_domain') . '/storage/' . $project->brochure : null,
             'map_url' => $project->map_url ?? null,
             'main_photo' => $project->main_photo ? config('app.image_domain') . '/storage/' . $project->main_photo : null,
-            'photos' => $project->photos ? array_map(function($photo) {
-                return config('app.image_domain') . '/storage/' . $photo;
-            }, $project->photos) : [],
+            'photos' => array_values(array_filter([
+                $project->photo_1 ? config('app.image_domain') . '/storage/' . $project->photo_1 : null,
+                $project->photo_2 ? config('app.image_domain') . '/storage/' . $project->photo_2 : null,
+                $project->photo_3 ? config('app.image_domain') . '/storage/' . $project->photo_3 : null,
+            ])),
             'competition_status' => $project->competition_status ?? null,
             'is_visible' => $project->is_visible ?? null,
             'developer' => $project->developer ? [

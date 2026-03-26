@@ -12,6 +12,40 @@ use Illuminate\Support\Facades\Validator;
 
 class ContestantVideoController extends Controller
 {
+    public function index(): JsonResponse
+    {
+        $videos = ContestantVideo::with(['contestant.user'])
+            ->orderBy('contestant_id')
+            ->orderBy('stage_number')
+            ->orderBy('video_number')
+            ->get();
+
+        $data = $videos->map(function ($video) {
+            return [
+                'id' => $video->id,
+                'contestant_id' => $video->contestant_id,
+                'project_id' => $video->project_id,
+                'type' => $video->type,
+                'stage_number' => $video->stage_number,
+                'video_number' => $video->video_number,
+                'file_path' => $video->file_path,
+                'file_url' => $video->file_path ? asset('storage/' . $video->file_path) : null,
+                'youtube_url' => $video->youtube_url,
+                'contestant' => $video->contestant ? [
+                    'id' => $video->contestant->id,
+                    'user_id' => $video->contestant->user_id,
+                    'name' => $video->contestant->user ? $video->contestant->user->name : null,
+                ] : null,
+                'created_at' => $video->created_at,
+                'updated_at' => $video->updated_at,
+            ];
+        });
+
+        return response()->json([
+            'videos' => $data,
+        ]);
+    }
+
     public function upload(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [

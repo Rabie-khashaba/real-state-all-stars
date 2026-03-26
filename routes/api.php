@@ -92,6 +92,7 @@ Route::prefix('contestant')->group(function () {
     Route::post('/verify-otp', [ContestantAuthController::class, 'verifyOtp']);
     Route::post('/reset-password', [ContestantAuthController::class, 'resetPassword']);
     Route::get('/profile/{id}', [ContestantAuthController::class, 'profileById']);
+    Route::get('/videos', [ContestantVideoController::class, 'index']);
 
     Route::middleware('auth:sanctum')->group(function () {
         Route::get('/profile', [ContestantAuthController::class, 'profile']);
