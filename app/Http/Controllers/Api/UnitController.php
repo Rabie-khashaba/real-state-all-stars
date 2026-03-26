@@ -29,9 +29,11 @@ class UnitController extends Controller
                 'brochure' => $unit->brochure ? config('app.image_domain') . '/storage/' . $unit->brochure : null,
                 'down_payment_percentage' => $unit->down_payment_percentage ?? null,
                 'number_of_years' => $unit->number_of_years ?? null,
-                'photos' => $unit->photos ? array_map(function($photo) {
-                    return config('app.image_domain') . '/storage/' . $photo;
-                }, $unit->photos) : [],
+                'photos' => array_values(array_filter([
+                    $unit->photo_1 ? config('app.image_domain') . '/storage/' . $unit->photo_1 : null,
+                    $unit->photo_2 ? config('app.image_domain') . '/storage/' . $unit->photo_2 : null,
+                    $unit->photo_3 ? config('app.image_domain') . '/storage/' . $unit->photo_3 : null,
+            ])),
                 'main_photo' => $unit->main_photo ? config('app.image_domain') . '/storage/' . $unit->main_photo : null,
                 'is_visible' => $unit->is_visible ?? null,
                 'developer' => $unit->developer ? [
@@ -81,9 +83,11 @@ class UnitController extends Controller
             'brochure' => $unit->brochure ? config('app.image_domain') . '/storage/' . $unit->brochure : null,
             'down_payment_percentage' => $unit->down_payment_percentage ?? null,
             'number_of_years' => $unit->number_of_years ?? null,
-            'photos' => $unit->photos ? array_map(function($photo) {
-                return config('app.image_domain') . '/storage/' . $photo;
-            }, $unit->photos) : [],
+            'photos' => array_values(array_filter([
+                    $unit->photo_1 ? config('app.image_domain') . '/storage/' . $unit->photo_1 : null,
+                    $unit->photo_2 ? config('app.image_domain') . '/storage/' . $unit->photo_2 : null,
+                    $unit->photo_3 ? config('app.image_domain') . '/storage/' . $unit->photo_3 : null,
+            ])),
             'main_photo' => $unit->main_photo ? config('app.image_domain') . '/storage/' . $unit->main_photo : null,
             'is_visible' => $unit->is_visible ?? null,
             'developer' => $unit->developer ? [
@@ -132,9 +136,11 @@ class UnitController extends Controller
             'brochure' => $unit->brochure ? config('app.image_domain') . '/storage/' . $unit->brochure : null,
             'down_payment_percentage' => $unit->down_payment_percentage ?? null,
             'number_of_years' => $unit->number_of_years ?? null,
-            'photos' => $unit->photos ? array_map(function($photo) {
-                return config('app.image_domain') . '/storage/' . $photo;
-            }, $unit->photos) : [],
+            'photos' => array_values(array_filter([
+                    $unit->photo_1 ? config('app.image_domain') . '/storage/' . $unit->photo_1 : null,
+                    $unit->photo_2 ? config('app.image_domain') . '/storage/' . $unit->photo_2 : null,
+                    $unit->photo_3 ? config('app.image_domain') . '/storage/' . $unit->photo_3 : null,
+            ])),
             'main_photo' => $unit->main_photo ? config('app.image_domain') . '/storage/' . $unit->main_photo : null,
             'is_visible' => $unit->is_visible ?? null,
             'developer' => $unit->developer ? [
