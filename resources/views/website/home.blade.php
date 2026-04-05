@@ -152,22 +152,56 @@
             object-fit: cover;
             max-width: 100%;
             height: auto;
+            width: 100%;
         }
 
         /* ✅ Responsive */
         @media (max-width: 768px) {
+            .subtitle-text {
+                display: block;
+                width: 100%;
+                max-width: 100%;
+                font-size: 18px;
+                line-height: 1.5;
+            }
+
+            .about-section {
+                padding-top: 2rem !important;
+                padding-bottom: 2rem !important;
+            }
+
+            .about-section .row {
+                row-gap: 1.5rem;
+            }
+
+            .about-section .col-md-6 {
+                text-align: center;
+            }
+
             .main-title {
                 font-size: 20px; /* أصغر في الموبايل */
+                line-height: 1.4;
             }
             .sub-title {
                 font-size: 16px;
+                line-height: 1.5;
             }
             .description {
                 font-size: 14px;
                 line-height: 22px;
+                text-align: center;
             }
             .title-underline {
                 width: 120px;
+                margin: 10px auto 20px;
+            }
+            .about-img {
+                width: 100%;
+                max-width: 280px;
+                max-height: 360px;
+                margin: 0 auto;
+                display: block;
+                object-fit: cover;
             }
         }
 
