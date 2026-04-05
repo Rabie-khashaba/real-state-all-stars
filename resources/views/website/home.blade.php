@@ -196,11 +196,43 @@
         /*    filter: invert(100%) grayscale(100%); !* يخلي الأيقونة سوداء *!*/
         /*}*/
 
-        .owl-carousel .item img {
+        .owl-carousel .item img,
+        .judges-visible-carousel > div > img {
 
             width: 240px;
             height: auto;
             border-radius: 10px;
+        }
+
+        .judges-visible-carousel {
+            overflow: hidden;
+            padding: 8px 0;
+        }
+
+        .judges-visible-track {
+            display: flex;
+            gap: 10px;
+            width: max-content;
+            animation: judgesAutoMove 18s linear infinite;
+        }
+
+        .judges-visible-carousel:hover .judges-visible-track {
+            animation-play-state: paused;
+        }
+
+        .judges-visible-track > div {
+            display: inline-block;
+            vertical-align: top;
+            flex: 0 0 auto;
+        }
+
+        @keyframes judgesAutoMove {
+            from {
+                transform: translateX(0);
+            }
+            to {
+                transform: translateX(-50%);
+            }
         }
 
         /* الأسهم باللون الأسود */
@@ -414,37 +446,37 @@
                         </div> --}}
 
 
-                    @php
-                    use Carbon\Carbon;
+                        @php
+use Carbon\Carbon;
 
-                    // تاريخ البداية (غيّره حسب مشروعك)
-                    $startDate = Carbon::create(2026, 1,20);
+// تاريخ البداية (غيّره حسب مشروعك)
+$startDate = Carbon::create(2026, 1,20);
 
-                    // تاريخ اليوم
-                    $today = Carbon::today();
+// تاريخ اليوم
+$today = Carbon::today();
 
-                    // عدد الأيام من البداية لليوم (شامل اليوم)
-                    $daysCount = $startDate->diffInDays($today) + 1;
+// عدد الأيام من البداية لليوم (شامل اليوم)
+$daysCount = $startDate->diffInDays($today) + 1;
 
-                    $totalIncrease = 0;
+$totalIncrease = 0;
 
-                    // نحسب زيادة كل يوم
-                    for ($i = 0; $i < $daysCount; $i++) {
+// نحسب زيادة كل يوم
+for ($i = 0; $i < $daysCount; $i++) {
 
-                        // seed ثابت لكل يوم
-                        $daySeed = $startDate->copy()->addDays($i)->format('Ymd');
-                        mt_srand((int) $daySeed);
+    // seed ثابت لكل يوم
+    $daySeed = $startDate->copy()->addDays($i)->format('Ymd');
+    mt_srand((int) $daySeed);
 
-                        // رقم عشوائي ثابت لليوم (20 - 30)
-                        $dailyIncrease = mt_rand(20, 30);
+    // رقم عشوائي ثابت لليوم (20 - 30)
+    $dailyIncrease = mt_rand(20, 30);
 
-                        $totalIncrease += $dailyIncrease;
-                    }
+    $totalIncrease += $dailyIncrease;
+}
 
-                    // الرقم النهائي
-                    $finalContestantsNumber =
-                        ($contestantsCount ?? 0) + 1000 + $totalIncrease;
-                    @endphp
+// الرقم النهائي
+$finalContestantsNumber =
+    ($contestantsCount ?? 0) + 1000 + $totalIncrease;
+@endphp
 
 
 
@@ -478,16 +510,27 @@
         </div>
     </div>
 
-    <div class="owl-carousel">
-        <div><img src="{{asset('public/images/home/person.png')}}" class="img-fluid" alt="Team 2"></div>
-        <div><img src="{{asset('public/images/home/person.png')}}" class="img-fluid" alt="Team 3"></div>
-        <div><img src="{{asset('public/images/home/person.png')}}" class="img-fluid" alt="Team 4"></div>
-        <div><img src="{{asset('public/images/home/person.png')}}" class="img-fluid" alt="Team 5"></div>
-        <div><img src="{{asset('public/images/home/person.png')}}" class="img-fluid" alt="Team 6"></div>
-        <div><img src="{{asset('public/images/home/person.png')}}" class="img-fluid" alt="Team 7"></div>
-        <div><img src="{{asset('public/images/home/person.png')}}" class="img-fluid" alt="Team 8"></div>
-        <div><img src="{{asset('public/images/home/person.png')}}" class="img-fluid" alt="Team 9"></div>
-        <div><img src="{{asset('public/images/home/person.png')}}" class="img-fluid" alt="Team 10"></div>
+    <div class="judges-visible-carousel">
+        <div class="judges-visible-track">
+            <div><img src="{{asset('public/images/home/person.png')}}" class="img-fluid" alt="Team 2"></div>
+            <div><img src="{{asset('public/images/home/person.png')}}" class="img-fluid" alt="Team 3"></div>
+            <div><img src="{{asset('public/images/home/person.png')}}" class="img-fluid" alt="Team 4"></div>
+            <div><img src="{{asset('public/images/home/person.png')}}" class="img-fluid" alt="Team 5"></div>
+            <div><img src="{{asset('public/images/home/person.png')}}" class="img-fluid" alt="Team 6"></div>
+            <div><img src="{{asset('public/images/home/person.png')}}" class="img-fluid" alt="Team 7"></div>
+            <div><img src="{{asset('public/images/home/person.png')}}" class="img-fluid" alt="Team 8"></div>
+            <div><img src="{{asset('public/images/home/person.png')}}" class="img-fluid" alt="Team 9"></div>
+            <div><img src="{{asset('public/images/home/person.png')}}" class="img-fluid" alt="Team 10"></div>
+            <div><img src="{{asset('public/images/home/person.png')}}" class="img-fluid" alt="Team 2"></div>
+            <div><img src="{{asset('public/images/home/person.png')}}" class="img-fluid" alt="Team 3"></div>
+            <div><img src="{{asset('public/images/home/person.png')}}" class="img-fluid" alt="Team 4"></div>
+            <div><img src="{{asset('public/images/home/person.png')}}" class="img-fluid" alt="Team 5"></div>
+            <div><img src="{{asset('public/images/home/person.png')}}" class="img-fluid" alt="Team 6"></div>
+            <div><img src="{{asset('public/images/home/person.png')}}" class="img-fluid" alt="Team 7"></div>
+            <div><img src="{{asset('public/images/home/person.png')}}" class="img-fluid" alt="Team 8"></div>
+            <div><img src="{{asset('public/images/home/person.png')}}" class="img-fluid" alt="Team 9"></div>
+            <div><img src="{{asset('public/images/home/person.png')}}" class="img-fluid" alt="Team 10"></div>
+        </div>
     </div>
 </section>
 
@@ -548,20 +591,20 @@
             <div class="row mb-5 mt-3">
                 <div class="col-12">
                     <h2 style="font-family: 'NowM', sans-serif; font-size: 20px; color: #fff;" class="text-uppercase">
-                        @php
-                            $extraText = app()->getLocale() === 'ar'
-                                ? (optional($prize)->extra_text_ar ?? 'جوائز إضافية تقدر بـ')
-                                : (optional($prize)->extra_text_en ?? 'And');
-                            $extraAmount = optional($prize)->extra_amount ?? '$500k';
-                        @endphp
+    @php
+        $extraText = app()->getLocale() === 'ar'
+            ? (optional($prize)->extra_text_ar ?? 'جوائز إضافية تقدر بـ')
+            : (optional($prize)->extra_text_en ?? 'And');
+        $extraAmount = optional($prize)->extra_amount ?? '$500k';
+    @endphp
 
-                        {{ $extraText }} <span style="color: #F8DA58">{{ $extraAmount }}</span>
-                        @if(app()->getLocale() === 'ar')
-                            !
-                        @else
-                            more
-                        @endif
-                    </h2>
+    {{ $extraText }} <span style="color: #F8DA58">{{ $extraAmount }}</span>
+    @if(app()->getLocale() === 'ar')
+        !
+    @else
+        more
+    @endif
+</h2>
 
                 </div>
             </div>
@@ -707,6 +750,7 @@
         window.addEventListener('languageChanged', function() {
             setTimeout(initOwlCarousel, 300); // نعيد تهيئة الكاروسيل بعد تغيير الاتجاه
         });
+
     });
 
 </script>
