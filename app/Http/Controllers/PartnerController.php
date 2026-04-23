@@ -36,7 +36,19 @@ class PartnerController extends Controller
             'type_of_partnership' => 'nullable|array',
             'other_sector' => 'nullable|string|max:255',
             'interest_description' => 'nullable|string',
-            'document' => 'nullable|file|mimes:pdf,doc,docx|max:5120',
+            'document' => [
+                'nullable',
+                'file',
+                'max:5120',
+                function ($attribute, $value, $fail) {
+                    $allowedExtensions = ['pdf', 'doc', 'docx'];
+                    $extension = strtolower($value->getClientOriginalExtension());
+
+                    if (! in_array($extension, $allowedExtensions, true)) {
+                        $fail('The document field must be a file of type: pdf, doc, docx.');
+                    }
+                },
+            ],
             'agree' => 'nullable|accepted',
         ]);
 

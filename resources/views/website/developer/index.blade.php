@@ -3,14 +3,26 @@
 @section('styles')
 
     <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
 
-
+        main.flex-fill {
+            margin-top: 0 !important;
+            padding-top: 0 !important;
+        }
 
         .hero {
             position: relative;
             height: 327px; /* ⬅️ نص الشاشة */
+            margin-top: -30px;
+            padding-top: 30px;
+            box-sizing: border-box;
             overflow: hidden;
-            background: url("{{ asset('public/images/developer/Devlopers.png') }}") center center/cover no-repeat; /* ⬅️ الخلفية صورة */
+            background: url("{{ asset('images/developer/Devlopers.png') }}") center center/cover no-repeat; /* ⬅️ الخلفية صورة */
         }
 
         /* ✅ Overlay */
@@ -35,6 +47,8 @@
         @media (max-width: 576px) {
             .hero {
                 height: 60vh; /* في الموبايل يكون أطول شوية */
+                margin-top: -30px;
+                padding-top: 30px;
             }
 
             .hero h1 {
@@ -48,6 +62,8 @@
         @media (max-width: 991.98px) and (orientation: landscape) {
             .hero {
                 height: 220px;
+                margin-top: -30px;
+                padding-top: 30px;
                 background-position: center 30%;
             }
 
@@ -90,32 +106,32 @@
 
         @font-face {
             font-family: 'NowR';      /* الاسم اللي هتستخدمه لاحقًا */
-            src: url("{{ asset('public/font/Now-Regular.otf') }}") format('opentype');
+            src: url("{{ asset('font/Now-Regular.otf') }}") format('opentype');
             font-weight: normal;
             font-style: normal;
         }
 
         @font-face {
             font-family: 'NowB';      /* الاسم اللي هتستخدمه لاحقًا */
-            src: url("{{ asset('public/font/Now-Bold.otf') }}") format("opentype");
+            src: url("{{ asset('font/Now-Bold.otf') }}") format("opentype");
             font-weight: normal;
             font-style: normal;
         }
         @font-face {
             font-family: 'NowL';
-            src: url("{{ asset('public/font/Now-Light.otf') }}") format("opentype");
+            src: url("{{ asset('font/Now-Light.otf') }}") format("opentype");
             font-weight: normal;
             font-style: normal;
         }
         @font-face {
             font-family: 'NowM';
-            src: url("{{ asset('public/font/Now-Medium.otf') }}") format("opentype");
+            src: url("{{ asset('font/Now-Medium.otf') }}") format("opentype");
             font-weight: normal;
             font-style: normal;
         }
         @font-face {
             font-family: 'NowTh';
-            src: url("{{ asset('public/font/Now-Thin.otf') }}") format("opentype");
+            src: url("{{ asset('font/Now-Thin.otf') }}") format("opentype");
             font-weight: normal;
             font-style: normal;
         }

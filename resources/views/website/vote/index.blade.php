@@ -3,14 +3,26 @@
 @section('styles')
 
     <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
 
-
+        main.flex-fill {
+            margin-top: 0 !important;
+            padding-top: 0 !important;
+        }
 
         .hero {
             position: relative;
             height: 327px; /* ⬅️ نص الشاشة */
+            margin-top: -30px;
+            padding-top: 30px;
+            box-sizing: border-box;
             overflow: hidden;
-            background: url("{{ asset('public/images/vote/bg.jpg') }}") center center/cover no-repeat; /* ⬅️ الخلفية صورة */
+            background: url("{{ asset('images/vote/bg.jpg') }}") center center/cover no-repeat; /* ⬅️ الخلفية صورة */
         }
 
         /* ✅ Overlay */
@@ -35,6 +47,8 @@
         @media (max-width: 576px) {
             .hero {
                 height: 60vh; /* في الموبايل يكون أطول شوية */
+                margin-top: -30px;
+                padding-top: 30px;
             }
 
             .hero h1 {
@@ -48,32 +62,32 @@
 
         @font-face {
             font-family: 'NowR';      /* الاسم اللي هتستخدمه لاحقًا */
-            src: url("{{ asset('public/font/Now-Regular.otf') }}") format('opentype');
+            src: url("{{ asset('font/Now-Regular.otf') }}") format('opentype');
             font-weight: normal;
             font-style: normal;
         }
 
         @font-face {
             font-family: 'NowB';      /* الاسم اللي هتستخدمه لاحقًا */
-            src: url("{{ asset('public/font/Now-Bold.otf') }}") format("opentype");
+            src: url("{{ asset('font/Now-Bold.otf') }}") format("opentype");
             font-weight: normal;
             font-style: normal;
         }
         @font-face {
             font-family: 'NowL';
-            src: url("{{ asset('public/font/Now-Light.otf') }}") format("opentype");
+            src: url("{{ asset('font/Now-Light.otf') }}") format("opentype");
             font-weight: normal;
             font-style: normal;
         }
         @font-face {
             font-family: 'NowM';
-            src: url("{{ asset('public/font/Now-Medium.otf') }}") format("opentype");
+            src: url("{{ asset('font/Now-Medium.otf') }}") format("opentype");
             font-weight: normal;
             font-style: normal;
         }
         @font-face {
             font-family: 'NowTh';
-            src: url("{{ asset('public/font/Now-Thin.otf') }}") format("opentype");
+            src: url("{{ asset('font/Now-Thin.otf') }}") format("opentype");
             font-weight: normal;
             font-style: normal;
         }
@@ -477,6 +491,19 @@
     }
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
     </style>
 @endsection
 
@@ -497,7 +524,10 @@
 
 
     </section>
+
     {{--section 2--}}
+
+
     <section class="container py-5">
         <!-- Stages Tabs -->
         <div class="mb-4">
@@ -526,11 +556,11 @@
         </div>
 
         @if(session('success'))
-            <p class="text-success text-center mb-3">{{ session('success') }}</p>
-        @endif
-        @if(session('error'))
-            <p class="text-danger text-center mb-3">{{ session('error') }}</p>
-        @endif
+                            <p class="text-success text-center mb-3">{{ session('success') }}</p>
+                        @endif
+                        @if(session('error'))
+                            <p class="text-danger text-center mb-3">{{ session('error') }}</p>
+                        @endif
 
 
 
@@ -539,6 +569,10 @@
             <div class="tab-pane fade show active" id="stage1" role="tabpanel" aria-labelledby="stage1-tab">
                 <!-- Tabs Content -->
                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-5 g-4">
+
+
+
+
 
                    {{-- @php
                         $stage1Winners = [];
@@ -571,7 +605,7 @@
                                         <!--</div>-->
 
                                         <div class="vote-count d-flex align-items-center gap-2">
-                                            <img src="{{ asset('public/images/vote/vote1.svg') }}" alt="Thumbs Up" style="width:24px; height:24px; margin-right:8px;">
+                                            <img src="{{ asset('images/vote/vote1.svg') }}" alt="Thumbs Up" style="width:24px; height:24px; margin-right:8px;">
                                             <span class="vote-number">{{ $stage1Winner->votes_count }}</span>
                                         </div>
 
@@ -582,7 +616,7 @@
                                         <div class="mt-5 pt-5">
                                             <p style="font-family: 'NowB', sans-serif; font-size: 13px;" class="contestant-name">
                                                 {{ $stage1Winner->user->name }}
-                                                <span class="verified-badge"><img src="{{asset('public/images/vote/verified.png')}}"></span>
+                                                <span class="verified-badge"><img src="{{asset('images/vote/verified.png')}}"></span>
                                             </p>
                                             <p style="font-family: 'NowR', sans-serif; font-size: 9px;" class="contestant-role">
                                                 {{ $stage1Winner->employer  }} | {{ $stage1Winner->user_id + 1000 }}
@@ -597,13 +631,13 @@
                                             @endphp
                                             <div class="icon-label text-center">
                                                 <a href="{{ $introVideo ? $introVideo->youtube_url : '#' }}" class="video-modal-link" data-youtube-url="{{ $introVideo ? $introVideo->youtube_url : '' }}" onclick="event.preventDefault(); event.stopPropagation();">
-                                                    <img src="{{ asset('public/images/vote/youtube.png') }}">
+                                                    <img src="{{ asset('images/vote/youtube.png') }}">
                                                 </a>
                                                 <p style="font-family: 'NowR', sans-serif; font-size: 9px;">Introducer</p>
                                             </div>
                                             <div class="icon-label text-center">
                                                 <a href="{{ $Video1 ? $Video1->youtube_url : '#' }}" class="video-modal-link" data-youtube-url="{{ $Video1 ? $Video1->youtube_url : '' }}" onclick="event.preventDefault(); event.stopPropagation();">
-                                                    <img src="{{ asset('public/images/vote/youtube.png') }}">
+                                                    <img src="{{ asset('images/vote/youtube.png') }}">
                                                 </a>
                                                 <p style="font-family: 'NowR', sans-serif; font-size: 9px; color: #ffffff">Video1</p>
                                             </div>
@@ -618,7 +652,7 @@
                                         </form> --}}
 
 
-                                        @php
+                                       @php
                                         // تحديد آخر مرحلة عند المتسابق رفع فيها فيديو
                                         $contestantHighestStage = $stage1Winner->videos->where('stage_number', '>', 0)->max('stage_number') ?? 1;
                                         // الزر يكون فعال فقط إذا كانت آخر مرحلة عند المتسابق = المرحلة الحالية (1)
@@ -631,7 +665,7 @@
                                         // إذا يوجد review وفاز → الزر disabled
                                         $hasWonInHighestStage = $reviewInHighestStage && $reviewInHighestStage->is_winner == true;
                                         $canVoteInThisStage = $isInHighestStage && $hasVideoWithUrl && !$hasWonInHighestStage;
-                                        @endphp
+                                    @endphp
                                         @if($canVoteInThisStage)
                                             <form action="{{ route('vote', $stage1Winner->id) }}" method="POST" class="vote-form d-inline">
                                                 @csrf
@@ -668,7 +702,7 @@
                             <a href="#" class="text-decoration-none judgeCard">
                                 <div class="judge-card">
                                     <div class="judge-img">
-                                        <img src="{{ asset('public/images/judge/judge.png') }}" alt="judge">
+                                        <img src="{{ asset('images/judge/judge.png') }}" alt="judge">
                                     </div>
                                 </div>
                             </a>
@@ -678,7 +712,7 @@
                             <a href="#" class="text-decoration-none judgeCard">
                                 <div class="judge-card">
                                     <div class="judge-img">
-                                        <img src="{{ asset('public/images/judge/judge.png') }}" alt="judge">
+                                        <img src="{{ asset('images/judge/judge.png') }}" alt="judge">
                                     </div>
                                 </div>
                             </a>
@@ -688,7 +722,7 @@
                             <a href="#" class="text-decoration-none judgeCard">
                                 <div class="judge-card">
                                     <div class="judge-img">
-                                        <img src="{{ asset('public/images/judge/judge.png') }}" alt="judge">
+                                        <img src="{{ asset('images/judge/judge.png') }}" alt="judge">
                                     </div>
                                 </div>
                             </a>
@@ -697,7 +731,7 @@
                             <a href="#" class="text-decoration-none judgeCard">
                                 <div class="judge-card">
                                     <div class="judge-img">
-                                        <img src="{{ asset('public/images/judge/judge.png') }}" alt="judge">
+                                        <img src="{{ asset('images/judge/judge.png') }}" alt="judge">
                                     </div>
                                 </div>
                             </a>
@@ -707,7 +741,7 @@
                             <a href="#" class="text-decoration-none judgeCard">
                                 <div class="judge-card">
                                     <div class="judge-img">
-                                        <img src="{{ asset('public/images/judge/judge.png') }}" alt="judge">
+                                        <img src="{{ asset('images/judge/judge.png') }}" alt="judge">
                                     </div>
                                 </div>
                             </a>
@@ -801,7 +835,7 @@
                                         </a>
 
                                      <div class="vote-count d-flex align-items-center gap-2">
-                                            <img src="{{ asset('public/images/vote/vote1.svg') }}" alt="Thumbs Up" style="width:24px; height:24px; margin-right:8px;">
+                                            <img src="{{ asset('images/vote/vote1.svg') }}" alt="Thumbs Up" style="width:24px; height:24px; margin-right:8px;">
                                             <span class="vote-number">{{ $stage2Winner->votes_count }}</span>
                                         </div>
 
@@ -812,7 +846,7 @@
                                 <div class="contestant-body text-start mt-4">
                                    <div class="mt-5 pt-5">
                                        <p style="font-family: 'NowB', sans-serif ; font-size: 13px;" class="contestant-name">
-                                           {{ $stage2Winner->user->name }} <span  class="verified-badge "><img src="{{asset('public/images/vote/verified.png')}}"></span>
+                                           {{ $stage2Winner->user->name }} <span  class="verified-badge "><img src="{{asset('images/vote/verified.png')}}"></span>
                                        </p>
                                        <p style="font-family: 'NowR', sans-serif ; font-size: 9px;" class="contestant-role ">{{ $stage2Winner->employer  }} | {{ $stage2Winner->user_id  + 1000 }}</p>
                                    </div>
@@ -826,7 +860,7 @@
                                         @foreach($stage2Videos as $key => $video)
                                             <div class="icon-label text-center">
                                                 <a href="{{ $video->youtube_url }}" class="video-modal-link" data-youtube-url="{{ $video->youtube_url }}" onclick="event.preventDefault(); event.stopPropagation();">
-                                                    <img src="{{ asset('public/images/vote/youtube.png') }}">
+                                                    <img src="{{ asset('images/vote/youtube.png') }}">
                                                 </a>
                                                 <p style="font-family: 'NowR', sans-serif ; font-size: 9px; color: #ffffff;">Video {{ $key + 2 }}</p>
                                             </div>
@@ -949,7 +983,7 @@
                                         </a>
 
                                      <div class="vote-count d-flex align-items-center gap-2">
-                                            <img src="{{ asset('public/images/vote/vote1.svg') }}" alt="Thumbs Up" style="width:24px; height:24px; margin-right:8px;">
+                                            <img src="{{ asset('images/vote/vote1.svg') }}" alt="Thumbs Up" style="width:24px; height:24px; margin-right:8px;">
                                             <span class="vote-number">{{ $stage3Winner->votes_count }}</span>
                                         </div>
 
@@ -960,7 +994,7 @@
                                 <div class="contestant-body text-start mt-4">
                                    <div class="mt-5 pt-5">
                                        <p style="font-family: 'NowB', sans-serif ; font-size: 13px;" class="contestant-name">
-                                           {{ $stage3Winner->user->name }} <span  class="verified-badge "><img src="{{asset('public/images/vote/verified.png')}}"></span>
+                                           {{ $stage3Winner->user->name }} <span  class="verified-badge "><img src="{{asset('images/vote/verified.png')}}"></span>
                                        </p>
                                        <p style="font-family: 'NowR', sans-serif ; font-size: 9px;" class="contestant-role ">{{ $stage3Winner->employer  }} | {{ $stage3Winner->user_id  + 1000}}</p>
                                    </div>
@@ -974,7 +1008,7 @@
                                         @foreach($stage3Videos as $key => $video)
                                             <div class="icon-label text-center">
                                                 <a href="{{ $video->youtube_url }}" class="video-modal-link" data-youtube-url="{{ $video->youtube_url }}" onclick="event.preventDefault(); event.stopPropagation();">
-                                                    <img src="{{ asset('public/images/vote/youtube.png') }}">
+                                                    <img src="{{ asset('images/vote/youtube.png') }}">
                                                 </a>
                                                 <p style="font-family: 'NowR', sans-serif ; font-size: 9px; color: #ffffff;">Video {{ $key + 4 }}</p>
                                             </div>
@@ -1099,7 +1133,7 @@
                                     </a>
 
                                      <div class="vote-count d-flex align-items-center gap-2">
-                                            <img src="{{ asset('public/images/vote/vote1.svg') }}" alt="Thumbs Up" style="width:24px; height:24px; margin-right:8px;">
+                                            <img src="{{ asset('images/vote/vote1.svg') }}" alt="Thumbs Up" style="width:24px; height:24px; margin-right:8px;">
                                             <span class="vote-number">{{ $stage4Winner->votes_count }}</span>
                                         </div>
 
@@ -1110,7 +1144,7 @@
                                 <div class="contestant-body text-start mt-4">
                                    <div class="mt-5 pt-5">
                                        <p style="font-family: 'NowB', sans-serif ; font-size: 13px;" class="contestant-name">
-                                           {{ $stage4Winner->user->name }} <span  class="verified-badge "><img src="{{asset('public/images/vote/verified.png')}}"></span>
+                                           {{ $stage4Winner->user->name }} <span  class="verified-badge "><img src="{{asset('images/vote/verified.png')}}"></span>
                                        </p>
                                        <p style="font-family: 'NowR', sans-serif ; font-size: 9px;" class="contestant-role ">{{ $stage4Winner->employer  }} | {{ $stage4Winner->user_id + 1000 }}</p>
                                    </div>
@@ -1124,7 +1158,7 @@
                                         @foreach($stage4Videos as $key => $video)
                                             <div class="icon-label text-center ">
                                                 <a href="{{ $video->youtube_url }}" class="video-modal-link" data-youtube-url="{{ $video->youtube_url }}" onclick="event.preventDefault(); event.stopPropagation();">
-                                                    <img src="{{ asset('public/images/vote/youtube.png') }}">
+                                                    <img src="{{ asset('images/vote/youtube.png') }}">
                                                 </a>
                                                 <p style="font-family: 'NowR', sans-serif ; font-size: 9px; color: #ffffff;">Video {{ $key + 7 }}</p>
                                             </div>

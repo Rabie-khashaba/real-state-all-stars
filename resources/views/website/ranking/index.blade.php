@@ -4,37 +4,49 @@
 
 @section('styles')
     <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        main.flex-fill {
+            margin-top: 0 !important;
+            padding-top: 0 !important;
+        }
+
         @font-face {
             font-family: 'NowR';
-            src: url("{{ asset('public/font/Now-Regular.otf') }}") format('opentype');
+            src: url("{{ asset('font/Now-Regular.otf') }}") format('opentype');
             font-weight: normal;
             font-style: normal;
         }
 
         @font-face {
             font-family: 'NowB';
-            src: url("{{ asset('public/font/Now-Bold.otf') }}") format("opentype");
+            src: url("{{ asset('font/Now-Bold.otf') }}") format("opentype");
             font-weight: normal;
             font-style: normal;
         }
 
         @font-face {
             font-family: 'NowL';
-            src: url("{{ asset('public/font/Now-Light.otf') }}") format("opentype");
+            src: url("{{ asset('font/Now-Light.otf') }}") format("opentype");
             font-weight: normal;
             font-style: normal;
         }
 
         @font-face {
             font-family: 'NowM';
-            src: url("{{ asset('public/font/Now-Medium.otf') }}") format("opentype");
+            src: url("{{ asset('font/Now-Medium.otf') }}") format("opentype");
             font-weight: normal;
             font-style: normal;
         }
 
         @font-face {
             font-family: 'NowTh';
-            src: url("{{ asset('public/font/Now-Thin.otf') }}") format("opentype");
+            src: url("{{ asset('font/Now-Thin.otf') }}") format("opentype");
             font-weight: normal;
             font-style: normal;
         }
@@ -69,7 +81,7 @@
             /*}*/
 
             /*.tab-text::before {*/
-                
+
             /*    visibility: visible;*/
             /*    position: absolute;*/
             /*    left: 0;*/
@@ -103,8 +115,10 @@
 
         .ranking-hero {
 /*             background: #1a1a1a;*/
-            background: url("{{ asset('public/images/home/ranking.png') }}") center center/cover no-repeat;
-            padding: 130px 0 60px 0;
+            background: url("{{ asset('images/home/ranking.png') }}") center center/cover no-repeat;
+            margin-top: -30px;
+            padding: 160px 0 60px 0;
+            box-sizing: border-box;
             position: relative;
         }
 
@@ -126,7 +140,8 @@
 
         @media (max-width: 768px) {
             .ranking-hero {
-                padding: 60px 0 40px 0;
+                margin-top: -30px;
+                padding: 90px 0 40px 0;
             }
 
             .ranking-description {

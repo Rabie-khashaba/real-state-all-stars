@@ -5,12 +5,26 @@
 <style>
 
 
+    html,
+    body {
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+    }
+
+    main.flex-fill {
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+    }
 
     .hero {
         position: relative;
         height: 327px; /* ⬅️ نص الشاشة */
+        margin-top: -30px;
+        padding-top: 30px;
+        box-sizing: border-box;
         overflow: hidden;
-        background: url("{{ asset('public/images/judge/Judges.png') }}") center center/cover no-repeat; /* ⬅️ الخلفية صورة */
+        background: url("{{ asset('images/judge/Judges.png') }}") center center/cover no-repeat; /* ⬅️ الخلفية صورة */
     }
 
     /* ✅ Overlay */
@@ -35,6 +49,8 @@
     @media (max-width: 576px) {
         .hero {
             height: 60vh; /* في الموبايل يكون أطول شوية */
+            margin-top: -30px;
+            padding-top: 30px;
         }
 
         .hero h1 {
@@ -66,32 +82,32 @@
 
     @font-face {
         font-family: 'NowR';      /* الاسم اللي هتستخدمه لاحقًا */
-        src: url("{{ asset('public/font/Now-Regular.otf') }}") format('opentype');
+        src: url("{{ asset('font/Now-Regular.otf') }}") format('opentype');
         font-weight: normal;
         font-style: normal;
     }
 
     @font-face {
         font-family: 'NowB';      /* الاسم اللي هتستخدمه لاحقًا */
-        src: url("{{ asset('public/font/Now-Bold.otf') }}") format("opentype");
+        src: url("{{ asset('font/Now-Bold.otf') }}") format("opentype");
         font-weight: normal;
         font-style: normal;
     }
     @font-face {
         font-family: 'NowL';
-        src: url("{{ asset('public/font/Now-Light.otf') }}") format("opentype");
+        src: url("{{ asset('font/Now-Light.otf') }}") format("opentype");
         font-weight: normal;
         font-style: normal;
     }
     @font-face {
         font-family: 'NowM';
-        src: url("{{ asset('public/font/Now-Medium.otf') }}") format("opentype");
+        src: url("{{ asset('font/Now-Medium.otf') }}") format("opentype");
         font-weight: normal;
         font-style: normal;
     }
     @font-face {
         font-family: 'NowTh';
-        src: url("{{ asset('public/font/Now-Thin.otf') }}") format("opentype");
+        src: url("{{ asset('font/Now-Thin.otf') }}") format("opentype");
         font-weight: normal;
         font-style: normal;
     }
@@ -154,7 +170,7 @@
 
 
     }
-    
+
 
     .judge-card {
         background: #fff;
@@ -284,7 +300,7 @@
                 <!--    <a href="{{url('/judgeProfile')}}" class="text-decoration-none">-->
                 <!--    <div class="judge-card p-3">-->
                 <!--        <div class="judge-img mb-3">-->
-                <!--            <img src="{{ asset('public/images/judge/judge.png') }}" alt="Judge 1">-->
+                <!--            <img src="{{ asset('images/judge/judge.png') }}" alt="Judge 1">-->
                 <!--        </div>-->
                 <!--        <h5 class="judge-name mb-1">Mahmoud Ali</h5>-->
                 <!--        <p class="judge-title mb-0">CEO & Founder of Triple</p>-->
@@ -292,8 +308,8 @@
                 <!--    </div>-->
                 <!--    </a>-->
                 <!--</div>-->
-                
-                
+
+
                 @foreach($judges as $judge)
                 <div class="col-6 col-md-4 custom-col-5">
                     <a href="{{ url('/judgeProfile/' . $judge->id) }}" class="text-decoration-none">
@@ -308,7 +324,7 @@
                     </a>
                 </div>
                 @endforeach
-                
+
 
 
 

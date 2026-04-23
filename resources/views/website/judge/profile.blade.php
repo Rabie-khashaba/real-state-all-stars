@@ -7,32 +7,32 @@
 
         @font-face {
             font-family: 'NowR';      /* الاسم اللي هتستخدمه لاحقًا */
-            src: url("{{ asset('public/font/Now-Regular.otf') }}") format('opentype');
+            src: url("{{ asset('font/Now-Regular.otf') }}") format('opentype');
             font-weight: normal;
             font-style: normal;
         }
 
         @font-face {
             font-family: 'NowB';      /* الاسم اللي هتستخدمه لاحقًا */
-            src: url("{{ asset('public/font/Now-Bold.otf') }}") format("opentype");
+            src: url("{{ asset('font/Now-Bold.otf') }}") format("opentype");
             font-weight: normal;
             font-style: normal;
         }
         @font-face {
             font-family: 'NowL';
-            src: url("{{ asset('public/font/Now-Light.otf') }}") format("opentype");
+            src: url("{{ asset('font/Now-Light.otf') }}") format("opentype");
             font-weight: normal;
             font-style: normal;
         }
         @font-face {
             font-family: 'NowM';
-            src: url("{{ asset('public/font/Now-Medium.otf') }}") format("opentype");
+            src: url("{{ asset('font/Now-Medium.otf') }}") format("opentype");
             font-weight: normal;
             font-style: normal;
         }
         @font-face {
             font-family: 'NowTh';
-            src: url("{{ asset('public/font/Now-Thin.otf') }}") format("opentype");
+            src: url("{{ asset('font/Now-Thin.otf') }}") format("opentype");
             font-weight: normal;
             font-style: normal;
         }
@@ -174,8 +174,8 @@
         display: block;
         border-radius: 12px;
     }
-    
-    
+
+
 @media (max-width: 992px) {
         .judge-img { height: 250px; }
     }

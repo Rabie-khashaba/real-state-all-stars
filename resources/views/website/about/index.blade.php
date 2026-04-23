@@ -1,48 +1,68 @@
 @extends('website.layouts.master')
 
+@section('title', 'About Us')
+@section('meta_description', 'تعرف على Real Estate All Stars — مبادرة عقارية رائدة تهدف إلى تكريم أفضل المطورين والمستثمرين في العالم العربي. قصتنا، رؤيتنا، ومهمتنا.')
+@section('meta_keywords', 'عن Real Estate All Stars, مبادرة عقارية, about us, real estate awards, Arab real estate')
+@section('canonical', url('/about'))
+
 @section('styles')
     <style>
 
         @font-face {
             font-family: 'NowR';      /* الاسم اللي هتستخدمه لاحقًا */
-            src: url("{{ asset('public/font/Now-Regular.otf') }}") format('opentype');
+            src: url("{{ asset('font/Now-Regular.otf') }}") format('opentype');
             font-weight: normal;
             font-style: normal;
         }
 
         @font-face {
             font-family: 'NowB';      /* الاسم اللي هتستخدمه لاحقًا */
-            src: url("{{ asset('public/font/Now-Bold.otf') }}") format("opentype");
+            src: url("{{ asset('font/Now-Bold.otf') }}") format("opentype");
             font-weight: normal;
             font-style: normal;
         }
 
         @font-face {
             font-family: 'NowL';
-            src: url("{{ asset('public/font/Now-Light.otf') }}") format("opentype");
+            src: url("{{ asset('font/Now-Light.otf') }}") format("opentype");
             font-weight: normal;
             font-style: normal;
         }
 
         @font-face {
             font-family: 'NowM';
-            src: url("{{ asset('public/font/Now-Medium.otf') }}") format("opentype");
+            src: url("{{ asset('font/Now-Medium.otf') }}") format("opentype");
             font-weight: normal;
             font-style: normal;
         }
 
         @font-face {
             font-family: 'NowTh';
-            src: url("{{ asset('public/font/Now-Thin.otf') }}") format("opentype");
+            src: url("{{ asset('font/Now-Thin.otf') }}") format("opentype");
             font-weight: normal;
             font-style: normal;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        main.flex-fill {
+            margin-top: 0 !important;
+            padding-top: 0 !important;
         }
 
         .hero {
             position: relative;
             height: 505px; /* ⬅️ نص الشاشة */
+            margin-top: -30px;
+            padding-top: 30px;
+            box-sizing: border-box;
             overflow: hidden;
-            background: url("{{ asset('public/images/how_we/Who We Are.png') }}") center center/cover no-repeat; /* ⬅️ الخلفية صورة */
+            background: url("{{ asset('images/how_we/Who We Are.png') }}") center center/cover no-repeat; /* ⬅️ الخلفية صورة */
         }
 
         /* ✅ Overlay */
@@ -67,6 +87,8 @@
         @media (max-width: 576px) {
             .hero {
                 height: 60vh; /* في الموبايل يكون أطول شوية */
+                margin-top: -30px;
+                padding-top: 30px;
             }
 
             .hero h1 {
@@ -240,13 +262,13 @@
             color: #999999;
             font-size: 18px;
             font-family: 'NowM', sans-serif
-            
+
         }
 
         .title {
             font-family: 'NowB', sans-serif;
 
-            
+
         }
 
         @media (max-width: 576px) {
@@ -280,15 +302,15 @@
                 line-height: 20px;
             }
         }
-        
+
         .small-title {
             font-size: 25px !important;
         }
-        
+
         .ptext{
             font-size : 11px !important;
         }
-        
+
         /* Mobile only */
 @media (max-width: 576px) {
 
@@ -343,7 +365,7 @@
             <div class="d-flex justify-content-center flex-wrap gap-5 mt-5 flags">
                 <a href="#">
                     <div class="text-center flag">
-                        <img src="{{asset('public/images/flags/flag5.png')}}" alt="USA" class="img-fluid "
+                        <img src="{{asset('images/flags/flag5.png')}}" alt="USA" class="img-fluid "
                             style="max-height:40px;">
 
                     </div>
@@ -351,28 +373,28 @@
 
                 <a href="#">
                 <div class="text-center flag">
-                    <img src="{{asset('public/images/flags/flag4.png')}}" alt="UK" class="img-fluid "
+                    <img src="{{asset('images/flags/flag4.png')}}" alt="UK" class="img-fluid "
                          style="max-height:40px;">
                 </div>
                 </a>
 
                 <a href="#">
                 <div class="text-center flag">
-                    <img src="{{asset('public/images/flags/flag3.png')}}" alt="France" class="img-fluid "
+                    <img src="{{asset('images/flags/flag3.png')}}" alt="France" class="img-fluid "
                          style="max-height:40px;">
                 </div>
                 </a>
 
                 <a href="#">
                 <div class="text-center flag">
-                    <img src="{{asset('public/images/flags/flag2.png')}}" alt="Germany" class="img-fluid "
+                    <img src="{{asset('images/flags/flag2.png')}}" alt="Germany" class="img-fluid "
                          style="max-height:40px;">
                 </div>
                 </a>
 
                 <a href="#">
                 <div class="text-center flag">
-                    <img src="{{asset('public/images/flags/flag1.png')}}" alt="Saudi Arabia" class="img-fluid "
+                    <img src="{{asset('images/flags/flag1.png')}}" alt="Saudi Arabia" class="img-fluid "
                          style="max-height:40px;">
                 </div>
                 </a>
@@ -416,7 +438,7 @@
                         <p class="p_box">{{ __('who.contestants_desc') }}</p>
                     </div>
                 </div>
-                
+
                 <!-- الصف الثاني -->
                 <div class="col-md-3 col-6">
                     <div class="custom-box tall-box">
@@ -430,7 +452,7 @@
                         <p class="p_box">{{ __('who.projects_desc') }}</p>
                     </div>
                 </div>
-                
+
                 <!-- عمودين متداخلين -->
                 <div class="col-md-3 col-6 d-flex flex-column gap-3">
                     <div class="custom-box">
@@ -442,7 +464,7 @@
                         <p class="p_box">{{ __('who.winners_desc') }}</p>
                     </div>
                 </div>
-                
+
                 <div class="col-md-3 col-6 d-flex flex-column gap-3">
                     <div class="custom-box">
                         <h2 class="fw-bold h2_box">{{ __('who.judges_number') }}</h2>

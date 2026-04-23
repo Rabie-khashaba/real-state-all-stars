@@ -254,8 +254,8 @@
             gap: 16px; /* أو 10px أو أي قيمة مناسبة للموبايل */
         }
     }
-    
-    
+
+
     .judge-form {
             direction: ltr !important;
             text-align: left !important;
@@ -351,7 +351,7 @@
                         </div>
                     @else
                         <!--<p class="text-center text-muted">{{ __('partner.not_found') }}</p>-->
-                        
+
                        <div class="logo-carousel" data-carousel>
                             <div class="logo-track">
                                  @for ($i = 1; $i <= 18; $i++)
@@ -498,7 +498,7 @@
                                     <!-- Upload -->
                                     <div class="col-md-8">
                                         <label class="form-label  labelName">Upload CV or Supporting Documents (optional):</label>
-                                        <input class="form-control" type="file" name="document">
+                                        <input class="form-control" type="file" name="document" accept=".pdf,.doc,.docx">
                                     </div>
 
                                     <!-- Checkbox -->
@@ -529,9 +529,9 @@
 
                 <!-- Developer Tab -->
                 <div class="tab-pane fade" id="developer" role="tabpanel" aria-labelledby="developer-tab">
-                     
-                
-                    
+
+
+
                     @if($developers->count())
                         <div class="logo-carousel" data-carousel>
                             <div class="logo-track">
@@ -550,26 +550,26 @@
                         </div>
                     @else
                         <!--<p class="text-center text-muted">{{ __('developer.not_found') }}</p>-->
-                        
+
                        <div class="logo-carousel" data-carousel>
                             <div class="logo-track">
-                                 
+
                                 <div class="logo-card">
                                    <img src="{{ asset('public/images/partner/1221.webp') }}" alt="logo">
                                 </div>
-                                
+
                                 <div class="logo-card">
                                    <img src="{{ asset('public/images/partner/1221.webp') }}" alt="">
                                   </div>
-                                  
+
                                   <div class="logo-card">
                                    <img src="{{ asset('public/images/partner/1221.webp') }}" alt="">
                                   </div>
-                                  
+
                                   <div class="logo-card">
                                    <img src="{{ asset('public/images/partner/1221.webp') }}" alt=''>
                                   </div>
-                               
+
                             </div >
                           </div>
                     @endif
@@ -599,7 +599,7 @@
 
                             <!-- العنوان -->
                             <div class="text-start mb-4">
-                                <h2 class="fw-bold" style="font-size:28px;font-family: 'NowM', sans-serif;">Partner Submission</h2>
+                                <h2 class="fw-bold" style="font-size:28px;font-family: 'NowM', sans-serif;">Developer Submission</h2>
                                 <p class="text-muted" style="font-size:15px;font-family: 'NowR', sans-serif;color: #667085">Please enter your details.</p>
                             </div>
 <!-- الفورم -->
@@ -707,7 +707,7 @@
                                     <!-- Upload -->
                                     <div class="col-md-8">
                                         <label class="form-label  labelName">Upload CV or Supporting Documents (optional):</label>
-                                        <input class="form-control" type="file" name="document">
+                                        <input class="form-control" type="file" name="document" accept=".pdf,.doc,.docx">
                                     </div>
 
                                     <!-- Checkbox -->
@@ -737,8 +737,8 @@
 
                 <!-- Sponsor Tab -->
                 <div class="tab-pane fade" id="sponsor" role="tabpanel" aria-labelledby="sponsor-tab">
-                     
-                    
+
+
                      @if($sponsors->count())
                         <div class="logo-carousel" data-carousel>
                             <div class="logo-track">
@@ -757,20 +757,20 @@
                         </div>
                     @else
                         <!--<p class="text-center text-muted">{{ __('sponsor.not_found') }}</p>-->
-                        
+
                         <div class="logo-carousel" data-carousel>
                             <div class="logo-track">
                                   <div class="logo-card">
                                    <img src="{{ asset('public/images/partner/1221.webp') }}" alt="">
-                                  </div> 
+                                  </div>
                                   <div class="logo-card">
                                    <img src="{{ asset('public/images/partner/1221.webp') }}" alt="">
                                   </div>
-                                  
+
                                   <div class="logo-card">
                                    <img src="{{ asset('public/images/partner/1221.webp') }}" alt="">
                                   </div>
-                                  
+
                                   <div class="logo-card">
                                    <img src="{{ asset('public/images/partner/1221.webp') }}" alt="">
                                   </div>
@@ -803,7 +803,7 @@
 
                             <!-- العنوان -->
                             <div class="text-start mb-4">
-                                <h2 class="fw-bold" style="font-size:28px;font-family: 'NowM', sans-serif;">Partner Submission</h2>
+                                <h2 class="fw-bold" style="font-size:28px;font-family: 'NowM', sans-serif;">Sponsor Submission</h2>
                                 <p class="text-muted" style="font-size:15px;font-family: 'NowR', sans-serif;color: #667085">Please enter your details.</p>
                             </div>
 
@@ -912,7 +912,7 @@
                                     <!-- Upload -->
                                     <div class="col-md-8">
                                         <label class="form-label  labelName">Upload CV or Supporting Documents (optional):</label>
-                                        <input class="form-control" type="file" name="document">
+                                        <input class="form-control" type="file" name="document" accept=".pdf,.doc,.docx">
                                     </div>
 
                                     <!-- Checkbox -->
