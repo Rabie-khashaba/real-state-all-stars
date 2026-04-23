@@ -9,6 +9,24 @@ use Illuminate\Http\Request;
 
 class JudgeController extends Controller
 {
+    protected function formatJudgeApplication(Judge $judge): array
+    {
+        return [
+            'id' => $judge->id,
+            'full_name' => $judge->full_name,
+            'professional_title' => $judge->professional_title,
+            'email' => $judge->email,
+            'phone' => $judge->phone,
+            'company' => $judge->company,
+            'areas_of_expertise' => $judge->areas_of_expertise,
+            'experience_description' => $judge->experience_description,
+            'document_path' => $judge->document_path,
+            'document_url' => $judge->document_path ? asset('storage/' . ltrim($judge->document_path, '/')) : null,
+            'created_at' => $judge->created_at,
+            'updated_at' => $judge->updated_at,
+        ];
+    }
+
     public function index()
     {
         $judges = JudgeCon::all();
@@ -82,6 +100,28 @@ class JudgeController extends Controller
         });
 
         return response()->json(['otherJudges' => $otherJudges]);
+    }
+
+    public function applications()
+    {
+        $judges = Judge::latest()->get()->map(function (Judge $judge) {
+            return $this->formatJudgeApplication($judge);
+        });
+
+        return response()->json(['judges' => $judges]);
+    }
+
+    public function application($id)
+    {
+        $judge = Judge::find($id);
+
+        if (!$judge) {
+            return response()->json(['message' => 'Judge application not found'], 404);
+        }
+
+        return response()->json([
+            'judge' => $this->formatJudgeApplication($judge),
+        ]);
     }
 
     public function store(Request $request)

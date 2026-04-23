@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\ContestantAuthController;
 use App\Http\Controllers\Api\ContestantVideoController;
 use App\Http\Controllers\Api\AboutController;
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\HomeController;
 use App\Http\Controllers\Api\InterestController;
 use App\Http\Controllers\Api\JudgeController;
@@ -15,7 +16,6 @@ use App\Http\Controllers\Api\UnitController;
 use App\Http\Controllers\Api\UnitTypeController;
 use App\Http\Controllers\Api\VoteController;
 use App\Http\Controllers\Api\VoterAuthController;
-use App\Http\Controllers\Api\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -34,8 +34,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
 Route::post('/login', [AuthController::class, 'login']);
+
 
 Route::get('/about', [AboutController::class, 'index']);
 
@@ -44,6 +44,11 @@ Route::prefix('judges')->group(function () {
     Route::post('/', [JudgeController::class, 'store']);
     Route::get('/{id}', [JudgeController::class, 'show']);
     Route::get('/{id}/others', [JudgeController::class, 'others']);
+});
+
+Route::prefix('judge-applications')->group(function () {
+    Route::get('/', [JudgeController::class, 'applications']);
+    Route::get('/{id}', [JudgeController::class, 'application']);
 });
 
 Route::prefix('developers')->group(function () {
